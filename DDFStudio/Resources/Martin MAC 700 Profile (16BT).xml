@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<device image="mac700profile.png" type="DMXDevice" dmxcversion="3" ddfversion="1.0" 
+        xmlns="http://ddfstudio.lima-city.de">
+        <!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://ddfstudio.lima-city.de DDFSchema.xsd">-->
+  <information>
+    <modell>MAC 700 Profile (16BT)</modell>
+    <vendor>Martin</vendor>
+    <author>Patrick Grote</author>
+    <comment>16-bit Basic</comment>
+  </information>
+  <functions>
+    <shutter dmxchannel="0">
+      <step type="closed" mindmx="0" maxdmx="19" />
+      <step type="open" mindmx="20" maxdmx="49" />
+    </shutter>
+    <strobe dmxchannel="0" >
+      <range type="linear" mindmx="72" maxdmx="50" minval="0.5" maxval="10" />
+      <range type="random" mindmx="187" maxdmx="128" minval="0.5" maxval="10" />
+    </strobe>
+    <dimmer dmxchannel="1" />
+    <cmy>
+      <cyan dmxchannel="2" />
+      <magenta dmxchannel="3" />
+      <yellow dmxchannel="4" />
+    </cmy>     
+    <colorwheel dmxchannel="5">
+      <step type="color" val="#FFFFFF" caption="White" mindmx="0" maxdmx="0" />
+      <step type="color" val="#0000bd" caption="Blue 110" mindmx="17" maxdmx="17" />
+      <step type="color" val="#00bd52" caption="Green 206 IAD" mindmx="34" maxdmx="34" />
+      <step type="color" val="#ee63e6" caption="Pink 312" mindmx="51" maxdmx="51" />
+      <step type="color" val="#ff6600" caption="Orange 306M" mindmx="68" maxdmx="68" />
+      <step type="color" val="#eedefe" caption="1/2 Minus Green" mindmx="85" maxdmx="85" />
+      <step type="color" val="#cedefe" caption="CTC 3200 - 4100 K" mindmx="102" maxdmx="102" />
+      <step type="color" val="#fed6b5" caption="CTC 5500 - 2800 K" mindmx="119" maxdmx="119" />
+      <step type="color" val="#a50039" caption="Red 308" mindmx="136" maxdmx="136" />
+      <step type="color" val="#ffffff" caption="White" mindmx="153" maxdmx="153" />
+      <rainbow>
+        <range type="cw" mindmx="219" maxdmx="199" minval="0.1" maxval="8" />
+        <range type="ccw" mindmx="220" maxdmx="240" minval="0.1" maxval="8" />
+      </rainbow>
+      <random>
+	<step type="fast" mindmx="241" maxdmx="245" />
+	<step type="medium" mindmx="246" maxdmx="250" />
+	<step type="slow" mindmx="251" maxdmx="255" />
+      </random>
+    </colorwheel>
+    <gobowheel dmxchannel="6" >
+      <goborotation dmxchannel="8" >
+	<step type="stop" mindmx="0" maxdmx="2" />
+        <step type="stop" mindmx="253" maxdmx="255" />
+        <range type="cw" mindmx="3" maxdmx="127" minval="0.1" maxval="8" />
+        <range type="ccw" mindmx="252" maxdmx="128" minval="0.1" maxval="8" />
+      </goborotation>
+      <goboindex dmxchannel="8" >
+	<range mindmx="0" maxdmx="255" range="395" />
+      </goboindex>
+      <goboshake />
+      <step type="open" caption="Open" mindmx="0" maxdmx="11" />
+
+      <step type="gobo" caption="Spiral" mindmx="12" maxdmx="15" val="spiral.png" >
+	<step for="goborotation" mindmx="36" maxdmx="39" />
+	<range handler="goboshake" mindmx="60" maxdmx="71" minval="0.1" maxval="3" />
+      </step>
+
+      <step type="gobo" caption="Radial Circles" mindmx="16" maxdmx="19" val="radialcircles.png" >
+	<step for="goborotation" mindmx="40" maxdmx="43" />
+	<range handler="goboshake" mindmx="72" maxdmx="83" minval="0.1" maxval="3" />
+      </step>
+
+      <step type="gobo" caption="Fused Dichro Red/Yellow" mindmx="20" maxdmx="23" val="redyellow.png" >
+	<step for="goborotation" mindmx="44" maxdmx="47" />
+	<range handler="goboshake" mindmx="84" maxdmx="95" minval="0.1" maxval="3" />
+      </step>
+
+      <step type="gobo" caption="Milky Way" mindmx="24" maxdmx="27" val="milkyway.png" >
+	<step for="goborotation" mindmx="48" maxdmx="51" />
+	<range handler="goboshake" mindmx="96" maxdmx="107" minval="0.1" maxval="3" />
+      </step>
+
+      <step type="gobo" caption="Water" mindmx="28" maxdmx="31" val="Water.png" >
+	<step for="goborotation" mindmx="52" maxdmx="55" />
+	<range handler="goboshake" mindmx="108" maxdmx="119" minval="0.1" maxval="3" />
+      </step>
+
+      <step type="gobo" caption="Flames" mindmx="32" maxdmx="35" val="flames.png" >
+	<step for="goborotation" mindmx="56" maxdmx="59" />
+	<range handler="goboshake" mindmx="120" maxdmx="131" minval="0.1" maxval="3" />
+      </step>
+
+      <wheelrotation>
+        <range type="cw" mindmx="229" maxdmx="204" minval="0.1" maxval="2" />
+	<range type="ccw" mindmx="255" maxdmx="230" minval="0.1" maxval="2" />
+      </wheelrotation>
+    </gobowheel>
+    <gobowheel dmxchannel="9" >
+      <step type="open" caption="Open" mindmx="194" maxdmx="202" />
+      <step type="gobo" caption="Crackle" mindmx="185" maxdmx="193" val="crackle.png" />
+      <step type="gobo" caption="Triangles Small" mindmx="176" maxdmx="184" val="trianglessmall.png" />
+      <step type="gobo" caption="Tye Dye" mindmx="167" maxdmx="175" val="tyedye.png" />
+      <step type="gobo" caption="Globo" mindmx="158" maxdmx="166" val="globo.png" />
+      <step type="gobo" caption="Worms" mindmx="149" maxdmx="157" val="worms2.png" />
+      <step type="gobo" caption="Bio" mindmx="140" maxdmx="148" val="bio.png" />
+      <step type="gobo" caption="Leaf Breakup" mindmx="131" maxdmx="139" val="leafbreakup.png" />
+      <step type="gobo" caption="Whirl Pool" mindmx="122" maxdmx="130" val="lesmiswhirlpool.png" />
+      <step type="gobo" caption="Two Tone" mindmx="113" maxdmx="121" val="twotone.png" />
+      <wheelrotation>
+        <range type="cw" mindmx="221" maxdmx="203" minval="0.1" maxval="2" />
+	<range type="ccw" mindmx="222" maxdmx="240" minval="0.1" maxval="2" />
+      </wheelrotation>
+      <random>
+	<step type="fast" mindmx="241" maxdmx="245" />
+	<step type="medium" mindmx="246" maxdmx="250" />
+	<step type="slow" mindmx="251" maxdmx="255" />
+      </random>
+    </gobowheel>
+    <prism dmxchannel="13" >
+      <prismrotation />
+        <step type="open" mindmx="0" maxdmx="19" caption="Excluded" />
+        <step type="open" mindmx="150" maxdmx="255" caption="Excluded" />
+        <step type="prism" mindmx="20" maxdmx="149" caption="Inserted" >
+          <step type="stop" handler="prismrotation" mindmx="80" maxdmx="89" minval="0" maxval="0" />
+          <range type="ccw" handler="prismrotation" mindmx="79" maxdmx="20" minval="0.1" maxval="3" />
+          <range type="cw" handler="prismrotation" mindmx="90" maxdmx="149" minval="0.1" maxval="3" />
+        </step>
+    </prism>
+    <iris dmxchannel="14" >
+      <range mindmx="199" maxdmx="0" minval="0" maxval="100" />
+      <range mindmx="200" maxdmx="215" minval="0" maxval="0" />
+    </iris>
+    <focus dmxchannel="15" >
+      <range mindmx="255" maxdmx="0" minval="0" maxval="100" />
+    </focus>
+    <zoom dmxchannel="16" >
+      <range mindmx="255" maxdmx="0" minval="14" maxval="30" />
+    </zoom>
+    <position>
+      <pan dmxchannel="17" finedmxchannel="18" >
+	<range range="540" />
+      </pan>
+      <tilt dmxchannel="19" finedmxchannel="20" >
+	<range range="240" />
+      </tilt>
+    </position>
+    <ptspeed dmxchannel="21" >
+      <range type="linear" mindmx="245" maxdmx="2" minval="0" maxval="100" />
+    </ptspeed>
+    <const dmxchannel="22" val="1" />
+  </functions>
+  <procedures>
+    <reset>
+      <set dmxchannel="0" value="210" />
+      <hold value="6000" />
+      <restore dmxchannel="0" />
+    </reset>
+    <lamp_on>
+      <set dmxchannel="0" value="235" />
+      <hold value="6000" />
+      <restore dmxchannel="0" />
+    </lamp_on>
+    <lamp_off>
+      <set dmxchannel="0" value="255" />
+      <hold value="6000" />
+      <restore dmxchannel="0" />
+    </lamp_off>
+    <procedure name="400W Mode">
+      <set dmxchannel="0" value="240" />
+      <hold value="1000" />
+      <restore dmxchannel="0" />
+    </procedure>
+    <procedure name="700W Mode">
+      <set dmxchannel="0" value="245" />
+      <hold value="1000" />
+      <restore dmxchannel="0" />
+    </procedure>
+  </procedures>
+</device>
