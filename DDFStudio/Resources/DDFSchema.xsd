@@ -26,18 +26,19 @@
 
   <xs:element name="step">
     <xs:complexType>
-      <xs:attribute name="type" type="xs:string" use="required"/>
+      <xs:attribute name="type" type="xs:string" use="optional"/>
       <xs:attribute name="mindmx" type="xs:unsignedByte" use="required"/>
       <xs:attribute name="maxdmx" type="xs:unsignedByte" use="required" />
       <xs:attribute name="minval" type="xs:decimal" use="optional"/>
       <xs:attribute name="maxval" type="xs:decimal" use="optional"/>
       <xs:attribute name="caption" type="xs:string" use="optional"/>
+      <xs:attribute name="val" type="xs:string" use="optional"/>
     </xs:complexType>
   </xs:element>
 
   <xs:element name="range">
     <xs:complexType>
-      <xs:attribute name="type" type="xs:string" use="required"/>
+      <xs:attribute name="type" type="xs:string" use="optional"/>
       <xs:attribute name="mindmx" type="xs:unsignedByte" use="required"/>
       <xs:attribute name="maxdmx" type="xs:unsignedByte" use="required"/>
       <xs:attribute name="minval" type="xs:decimal" use="optional"/>
@@ -132,7 +133,56 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="position">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="pan" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="range" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+            <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tilt" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="range" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+            <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 
+  <xs:element name="colorwheel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+        <xs:element name="wheelrotation" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+              <xs:element ref="range" minOccurs="0" maxOccurs="127"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="random" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+              <xs:element ref="range" minOccurs="0" maxOccurs="127"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+      <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+    </xs:complexType>
+  </xs:element>
 
 
   <!--begin device-->
@@ -236,6 +286,53 @@
               <!--begin prism-->
               <xs:element ref="prism" minOccurs="0" maxOccurs="1"/>
               <!--end prism-->
+
+              <!--begin frost-->
+              <xs:element name="frost" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+                    <xs:element ref="range" minOccurs="0" maxOccurs="127"/>
+                  </xs:sequence>
+                  <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                  <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end frost-->
+
+              <!--begin position-->
+              <xs:element ref="position" minOccurs="0" maxOccurs="1"/>
+              <!--end position-->
+
+              <!--begin ptspeed-->
+              <xs:element name="ptspeed" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+                    <xs:element ref="range" minOccurs="0" maxOccurs="127"/>
+                  </xs:sequence>
+                  <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                  <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end ptspeed-->
+
+              <!--begin colortemp-->
+              <xs:element name="colortemp" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+                    <xs:element ref="range" minOccurs="0" maxOccurs="127"/>
+                  </xs:sequence>
+                  <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                  <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end colortemp-->
+              
+              <!--begin colorwheel-->
+              <xs:element ref="colorwheel" minOccurs="0" maxOccurs="unbounded"/>
+              <!--end colorwheel-->
             </xs:sequence>
           </xs:complexType>
         </xs:element>
