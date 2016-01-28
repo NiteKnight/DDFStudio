@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema id="Play" 
+                     targetNamespace="http://tempuri.org/Play.xsd" 
+                     elementFormDefault="qualified" 
+                     xmlns="http://tempuri.org/Play.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name='myShoeSize'>
+ <xs:complexType>
+  <xs:extension base='xs:decimal'>
+    <xs:attribute name='sizing' type='xs:string' />
+    <xs:extension />
+   </xs:extension>
+ </xs:complexType>
+</xs:element>
+<player></player>
+</xs:schema>

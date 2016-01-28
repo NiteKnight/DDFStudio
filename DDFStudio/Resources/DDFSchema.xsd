@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?> 
+<xs:schema 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:std="http://www.dmxcontrol.de"
+  attributeFormDefault="unqualified" 
+  elementFormDefault="qualified" 
+  targetNamespace="http://www.dmxcontrol.de">
+
+  <xs:simpleType name="DMXUniverse">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="3"/>
+      <xs:fractionDigits value="0"/>
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="511"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CircleDegrees">
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="5"/>
+      <xs:fractionDigits value="2"/>
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="360"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="step">
+    <xs:complexType>
+      <xs:attribute name="type" type="xs:string" use="required"/>
+      <xs:attribute name="mindmx" type="xs:unsignedByte" use="required"/>
+      <xs:attribute name="maxdmx" type="xs:unsignedByte" use="required" />
+      <xs:attribute name="minval" type="xs:decimal" use="optional"/>
+      <xs:attribute name="maxval" type="xs:decimal" use="optional"/>
+      <xs:attribute name="caption" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="range">
+    <xs:complexType>
+      <xs:attribute name="type" type="xs:string" use="required"/>
+      <xs:attribute name="mindmx" type="xs:unsignedByte" use="required"/>
+      <xs:attribute name="maxdmx" type="xs:unsignedByte" use="required"/>
+      <xs:attribute name="minval" type="xs:decimal" use="optional"/>
+      <xs:attribute name="maxval" type="xs:decimal" use="optional"/>
+      <xs:attribute name="range" type="std:CircleDegrees" use="optional"/>
+      <xs:attribute name="caption" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+
+              <xs:element name="cmy">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="cyan">
+                      <xs:complexType>
+                        <xs:attribute ref="std:dmxchannel"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="magenta">
+                      <xs:complexType>
+                        <xs:attribute ref="std:dmxchannel"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="yellow">
+                      <xs:complexType>
+                        <xs:attribute ref="std:dmxchannel"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+                <xs:element name="rgb">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="red" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:attribute ref="std:dmxchannel"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="green" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:attribute ref="std:dmxchannel"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="blue" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:attribute ref="std:dmxchannel"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="amber" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:attribute ref="std:dmxchannel"/>
+                        <xs:attribute name="hueLeftBottom" type="std:CircleDegrees" default="1"/>
+                        <xs:attribute name="hueLeftTop" type="std:CircleDegrees" default="1"/>
+                        <xs:attribute name="hueRightBottom" type="std:CircleDegrees" default="1"/>
+                        <xs:attribute name="hueRightTop" type="std:CircleDegrees" default="1"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+  
+
+                <xs:element name="prism">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="prismrotation" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element ref="std:step" minOccurs="0" maxOccurs="256"/>
+                          <xs:element ref="std:range" minOccurs="0" maxOccurs="127"/>
+                        </xs:sequence>
+                        <xs:attribute ref="std:dmxchannel" default="1"/>
+                        <xs:attribute ref="std:finedmxchannel" default="1"/>
+                      </xs:complexType>
+                    </xs:element>
+
+                    <xs:element name="prismindex" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element ref="std:range" minOccurs="0" maxOccurs="127"/>
+                        </xs:sequence>
+                        <xs:attribute ref="std:dmxchannel" default="1"/>
+                        <xs:attribute ref="std:finedmxchannel" default="1"/>
+                      </xs:complexType>
+                    </xs:element>
+
+                    <xs:element ref="std:range" minOccurs="0" maxOccurs="127"/>
+                    <xs:element ref="std:step" minOccurs="0" maxOccurs="256"/>
+                  </xs:sequence>
+                  <xs:attribute ref="std:dmxchannel" default="1"/>
+                </xs:complexType>
+              </xs:element>
+  
+  <xs:attribute name="dmxchannel" type="std:DMXUniverse" default="1"/>
+  
+  <xs:attribute name="finedmxchannel" type="std:DMXUniverse" default="1"/>
+
+  
+  <!--begin device-->
+  <xs:element name ="device">
+    <xs:complexType>
+      <xs:sequence>
+        <!--begin information-->
+        <xs:element name="information" maxOccurs="1" minOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="modell" type="xs:string"/>
+              <xs:element name="vendor" type="xs:string"/>
+              <xs:element name="author" type="xs:string"/>
+              <xs:element name="comment" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <!--end information-->
+        <!--begin functions-->
+        <xs:element name="functions" minOccurs="1" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <!--begin shutter-->
+              <xs:element name="shutter" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="std:step" minOccurs="0" maxOccurs="256"/>
+                  </xs:sequence>
+                  <xs:attribute ref="std:dmxchannel"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end shutter-->
+              <!--begin strobe-->
+              <xs:element name="strobe" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="std:step" minOccurs="0" maxOccurs="256"/>
+                    <xs:element ref="std:range" minOccurs="0" maxOccurs="127"/>
+                  </xs:sequence>
+                  <xs:attribute ref="std:dmxchannel"/>
+                  <xs:attribute ref="std:finedmxchannel"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end strobe-->
+              <!--begin dimmer-->
+              <xs:element name="dimmer" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="std:range" minOccurs="0" maxOccurs="127"/>
+                  </xs:sequence>
+                  <xs:attribute ref="std:dmxchannel"/>
+                  <xs:attribute ref="std:finedmxchannel"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end dimmer-->
+              
+              <!--begin cmy-->
+              <xs:element ref="std:cmy" minOccurs="0" maxOccurs="1"/>
+              <!--end cmy-->
+              
+              <!--begin rgb-->
+              <xs:element ref="std:rgb" minOccurs="0" maxOccurs="1"/>
+              <!--end rgb-->
+            
+              <!--begin zoom-->
+              <xs:element name="zoom" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="std:range" minOccurs="0" maxOccurs="127"/>
+                  </xs:sequence>
+                  <xs:attribute ref="std:dmxchannel"/>
+                  <xs:attribute ref="std:finedmxchannel"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end zoom-->
+            
+              <!--begin focus-->
+              <xs:element name="focus" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="std:range" minOccurs="0" maxOccurs="127"/>
+                  </xs:sequence>
+                  <xs:attribute ref="std:dmxchannel"/>
+                  <xs:attribute ref="std:finedmxchannel"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end focus-->
+
+              <!--begin iris-->
+              <xs:element name="iris" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="std:range" minOccurs="0" maxOccurs="127"/>
+                  </xs:sequence>
+                  <xs:attribute ref="std:dmxchannel"/>
+                  <xs:attribute ref="std:finedmxchannel"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end iris-->
+            
+              <!--begin prism-->
+              <xs:element ref="std:prism" minOccurs="0" maxOccurs="1"/>
+              <!--end prism-->
+          </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <!--end functions-->
+      </xs:sequence>
+      <xs:attribute name="image" type="xs:string"/>
+      <xs:attribute name="type" type="xs:string" default="DMXDevice"/>
+      <xs:attribute name="dmxcversion" type="xs:unsignedInt" default="3"/>
+      <xs:attribute name="ddfversion" type="xs:decimal" default="1.0"/>
+    </xs:complexType>
+  </xs:element>
+  <!--end device-->
+</xs:schema>

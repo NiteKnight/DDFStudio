@@ -1,0 +1,44 @@
+﻿<Window x:Name="obj_Window_MessageDialog" x:Class="MessageDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DDFStudio"
+        mc:Ignorable="d"
+        Title="MessageDialog" Height="300" Width="421" WindowStartupLocation="CenterScreen" Icon="Resources/MainIcon.ico" Topmost="True" ShowInTaskbar="False" ResizeMode="NoResize">
+    <Window.Background>
+        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowFrameColorKey}}"/>
+    </Window.Background>
+    <Grid x:Name="obj_Grid_MainLayout">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="obj_Grid_ButtonLayout" Grid.Row="2" Margin="0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="obj_Button_OKButton" Content="OK" Grid.Column="1" Width="100" Height="32" />
+        </Grid>
+        <Grid x:Name="obj_Grid_HeaderLayout" Margin="15,15,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image x:Name="obj_Image_IconImage" Height="64" Width="64" Margin="0,0,5,0" VerticalAlignment="Top" Source="pack://siteoforigin:,,,/Resources/Warning.ico"/>
+            <TextBlock x:Name="obj_TextBlock_HeaderMessage" Grid.Column="1" TextWrapping="Wrap" Text="Dies ist ein Beispieltext zum Testen der Textblockfunktionalität, und um zu sehen ob auch längere Texte so hineinpassen wie sie hineinpassen sollen. :)" Margin="5,0,0,0"/>
+        </Grid>
+        <Grid x:Name="obj_Grid_MessageLayout" Grid.Row="1" Margin="15,0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label x:Name="obj_Label_MessageLabel" Content="Message:" />
+            <TextBox x:Name="obj_TextBox_Message" Grid.Row="1" Text="Hier werden dann die Fehlermeldungen angezeigt." IsReadOnlyCaretVisible="True" IsReadOnly="True" TextWrapping="WrapWithOverflow" />
+        </Grid>
+
+    </Grid>
+</Window>

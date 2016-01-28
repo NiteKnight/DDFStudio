@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" ?>
+<content xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' 
+    xsi:noNamespaceSchemaLocation="Warning.xsd">
+ <subject>
+   <html>
+   <p>sdfsdf</p>
+   <br/>
+   <b> bold or <i> italic </i> or strong </b>
+   </html>
+ </subject>
+</content>
