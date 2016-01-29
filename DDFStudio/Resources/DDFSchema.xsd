@@ -26,6 +26,10 @@
 
   <xs:element name="step">
     <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+        <xs:element ref="range" minOccurs="0" maxOccurs="127"/>
+      </xs:sequence>
       <xs:attribute name="type" type="xs:string" use="optional"/>
       <xs:attribute name="mindmx" type="xs:unsignedByte" use="required"/>
       <xs:attribute name="maxdmx" type="xs:unsignedByte" use="required" />
@@ -33,6 +37,7 @@
       <xs:attribute name="maxval" type="xs:decimal" use="optional"/>
       <xs:attribute name="caption" type="xs:string" use="optional"/>
       <xs:attribute name="val" type="xs:string" use="optional"/>
+      <xs:attribute name="for" type="xs:string" use="optional"/>
     </xs:complexType>
   </xs:element>
 
@@ -43,8 +48,9 @@
       <xs:attribute name="maxdmx" type="xs:unsignedByte" use="required"/>
       <xs:attribute name="minval" type="xs:decimal" use="optional"/>
       <xs:attribute name="maxval" type="xs:decimal" use="optional"/>
-      <xs:attribute name="range" type="CircleDegrees" use="optional"/>
+      <xs:attribute name="range" type="xs:decimal" use="optional"/>
       <xs:attribute name="caption" type="xs:string" use="optional"/>
+      <xs:attribute name="handler" type="xs:string" use="optional"/>
     </xs:complexType>
   </xs:element>
 
@@ -184,6 +190,70 @@
     </xs:complexType>
   </xs:element>
 
+              <xs:element name="gobowheel">
+                <xs:complexType>
+                  <xs:sequence>
+                    <!--begin goborotation-->
+                    <xs:element name="goborotation" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+                          <xs:element ref="range" minOccurs="0" maxOccurs="127"/>
+                        </xs:sequence>
+                        <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                        <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+                      </xs:complexType>                      
+                    </xs:element>
+                    <!--end goborotation-->
+                    <!--begin goboindex-->
+                    <xs:element name="goboindex" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                       <xs:sequence>
+                          <xs:element ref="range" minOccurs="0" maxOccurs="127"/> 
+                        </xs:sequence>
+                        <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                        <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <!--end goboindex-->
+                    <!--begin goboshake-->
+                    <xs:element name="goboshake" minOccurs="0" maxOccurs="1">
+                     <xs:complexType>
+                       <xs:sequence>
+                         <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+                         <xs:element ref="range" minOccurs="0" maxOccurs="127"/>
+                       </xs:sequence>
+                       <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                       <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+                     </xs:complexType>
+                    </xs:element>
+                    <!--end goboshake-->
+                    <!--begin wheelrotation-->
+                    <xs:element name="wheelrotation" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                         <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+                         <xs:element ref="range" minOccurs="0" maxOccurs="127"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <!--end wheelrotation-->
+                    <!--begin random-->
+                    <xs:element name="random" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                         <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+                         <xs:element ref="range" minOccurs="0" maxOccurs="127"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <!--end random-->
+                    <xs:element ref="step" minOccurs="0" maxOccurs="256"/>                                      
+                  </xs:sequence>
+                  <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                  <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+                </xs:complexType>
+              </xs:element>
 
   <!--begin device-->
   <xs:element name ="device">
@@ -333,6 +403,10 @@
               <!--begin colorwheel-->
               <xs:element ref="colorwheel" minOccurs="0" maxOccurs="unbounded"/>
               <!--end colorwheel-->
+            
+              <!--begin gobowheel-->
+              <xs:element ref="gobowheel" minOccurs="0" maxOccurs="unbounded"/>
+              <!--end gobowheel-->
             </xs:sequence>
           </xs:complexType>
         </xs:element>

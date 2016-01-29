@@ -45,7 +45,7 @@
 	<step type="slow" mindmx="251" maxdmx="255" />
       </random>
     </colorwheel>
-    <gobowheel dmxchannel="6" >
+    <gobowheel dmxchannel="6">
       <goborotation dmxchannel="8" >
 	<step type="stop" mindmx="0" maxdmx="2" />
         <step type="stop" mindmx="253" maxdmx="255" />
@@ -56,10 +56,14 @@
 	<range mindmx="0" maxdmx="255" range="395" />
       </goboindex>
       <goboshake />
-      <step type="open" caption="Open" mindmx="0" maxdmx="11" />
+      <wheelrotation>
+        <range type="cw" mindmx="229" maxdmx="204" minval="0.1" maxval="2" />
+        <range type="ccw" mindmx="255" maxdmx="230" minval="0.1" maxval="2" />
+      </wheelrotation>
+      <step type="open" caption="Open" mindmx="0" maxdmx="11"/>
 
-      <step type="gobo" caption="Spiral" mindmx="12" maxdmx="15" val="spiral.png" >
-	<step for="goborotation" mindmx="36" maxdmx="39" />
+      <step type="gobo" caption="Spiral" mindmx="12" maxdmx="15" val="spiral.png">
+	<step for="goborotation" mindmx="36" maxdmx="39"/>
 	<range handler="goboshake" mindmx="60" maxdmx="71" minval="0.1" maxval="3" />
       </step>
 
@@ -88,12 +92,17 @@
 	<range handler="goboshake" mindmx="120" maxdmx="131" minval="0.1" maxval="3" />
       </step>
 
-      <wheelrotation>
-        <range type="cw" mindmx="229" maxdmx="204" minval="0.1" maxval="2" />
-	<range type="ccw" mindmx="255" maxdmx="230" minval="0.1" maxval="2" />
-      </wheelrotation>
     </gobowheel>
     <gobowheel dmxchannel="9" >
+      <wheelrotation>
+        <range type="cw" mindmx="221" maxdmx="203" minval="0.1" maxval="2" />
+        <range type="ccw" mindmx="222" maxdmx="240" minval="0.1" maxval="2" />
+      </wheelrotation>
+      <random>
+        <step type="fast" mindmx="241" maxdmx="245" />
+        <step type="medium" mindmx="246" maxdmx="250" />
+        <step type="slow" mindmx="251" maxdmx="255" />
+      </random>
       <step type="open" caption="Open" mindmx="194" maxdmx="202" />
       <step type="gobo" caption="Crackle" mindmx="185" maxdmx="193" val="crackle.png" />
       <step type="gobo" caption="Triangles Small" mindmx="176" maxdmx="184" val="trianglessmall.png" />
@@ -104,26 +113,7 @@
       <step type="gobo" caption="Leaf Breakup" mindmx="131" maxdmx="139" val="leafbreakup.png" />
       <step type="gobo" caption="Whirl Pool" mindmx="122" maxdmx="130" val="lesmiswhirlpool.png" />
       <step type="gobo" caption="Two Tone" mindmx="113" maxdmx="121" val="twotone.png" />
-      <wheelrotation>
-        <range type="cw" mindmx="221" maxdmx="203" minval="0.1" maxval="2" />
-	<range type="ccw" mindmx="222" maxdmx="240" minval="0.1" maxval="2" />
-      </wheelrotation>
-      <random>
-	<step type="fast" mindmx="241" maxdmx="245" />
-	<step type="medium" mindmx="246" maxdmx="250" />
-	<step type="slow" mindmx="251" maxdmx="255" />
-      </random>
     </gobowheel>
-    <prism dmxchannel="13" >
-      <prismrotation />
-        <step type="open" mindmx="0" maxdmx="19" caption="Excluded" />
-        <step type="open" mindmx="150" maxdmx="255" caption="Excluded" />
-        <step type="prism" mindmx="20" maxdmx="149" caption="Inserted" >
-          <step type="stop" handler="prismrotation" mindmx="80" maxdmx="89" minval="0" maxval="0" />
-          <range type="ccw" handler="prismrotation" mindmx="79" maxdmx="20" minval="0.1" maxval="3" />
-          <range type="cw" handler="prismrotation" mindmx="90" maxdmx="149" minval="0.1" maxval="3" />
-        </step>
-    </prism>
     <iris dmxchannel="14" >
       <range mindmx="199" maxdmx="0" minval="0" maxval="100" />
       <range mindmx="200" maxdmx="215" minval="0" maxval="0" />
@@ -134,6 +124,16 @@
     <zoom dmxchannel="16" >
       <range mindmx="255" maxdmx="0" minval="14" maxval="30" />
     </zoom>
+    <prism dmxchannel="13" >
+      <prismrotation />
+      <step type="open" mindmx="0" maxdmx="19" caption="Excluded" />
+      <step type="open" mindmx="150" maxdmx="255" caption="Excluded" />
+      <step type="prism" mindmx="20" maxdmx="149" caption="Inserted" >
+        <step type="stop" handler="prismrotation" mindmx="80" maxdmx="89" minval="0" maxval="0" />
+        <range type="ccw" handler="prismrotation" mindmx="79" maxdmx="20" minval="0.1" maxval="3" />
+        <range type="cw" handler="prismrotation" mindmx="90" maxdmx="149" minval="0.1" maxval="3" />
+      </step>
+    </prism>
     <position>
       <pan dmxchannel="17" finedmxchannel="18" >
 	<range range="540" />
