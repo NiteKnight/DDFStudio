@@ -19,11 +19,42 @@
       <range type="random" mindmx="187" maxdmx="128" minval="0.5" maxval="10" />
     </strobe>
     <dimmer dmxchannel="1" />
+    <zoom dmxchannel="16" >
+      <range mindmx="255" maxdmx="0" minval="14" maxval="30" />
+    </zoom>
+    <focus dmxchannel="15" >
+      <range mindmx="255" maxdmx="0" minval="0" maxval="100" />
+    </focus>
+    <iris dmxchannel="14" >
+      <range mindmx="199" maxdmx="0" minval="0" maxval="100" />
+      <range mindmx="200" maxdmx="215" minval="0" maxval="0" />
+    </iris>
+    <prism dmxchannel="13" >
+      <prismrotation />
+      <step type="open" mindmx="0" maxdmx="19" caption="Excluded" />
+      <step type="open" mindmx="150" maxdmx="255" caption="Excluded" />
+      <step type="prism" mindmx="20" maxdmx="149" caption="Inserted" >
+        <step type="stop" handler="prismrotation" mindmx="80" maxdmx="89" minval="0" maxval="0" />
+        <range type="ccw" handler="prismrotation" mindmx="79" maxdmx="20" minval="0.1" maxval="3" />
+        <range type="cw" handler="prismrotation" mindmx="90" maxdmx="149" minval="0.1" maxval="3" />
+      </step>
+    </prism>
+    <position>
+      <pan dmxchannel="17" finedmxchannel="18" >
+        <range range="540" />
+      </pan>
+      <tilt dmxchannel="19" finedmxchannel="20" >
+        <range range="240" />
+      </tilt>
+    </position>
+    <ptspeed dmxchannel="21" >
+      <range type="linear" mindmx="245" maxdmx="2" minval="0" maxval="100" />
+    </ptspeed>
     <cmy>
       <cyan dmxchannel="2" />
       <magenta dmxchannel="3" />
       <yellow dmxchannel="4" />
-    </cmy>     
+    </cmy>
     <colorwheel dmxchannel="5">
       <step type="color" val="#FFFFFF" caption="White" mindmx="0" maxdmx="0" />
       <step type="color" val="#0000bd" caption="Blue 110" mindmx="17" maxdmx="17" />
@@ -114,37 +145,6 @@
       <step type="gobo" caption="Whirl Pool" mindmx="122" maxdmx="130" val="lesmiswhirlpool.png" />
       <step type="gobo" caption="Two Tone" mindmx="113" maxdmx="121" val="twotone.png" />
     </gobowheel>
-    <iris dmxchannel="14" >
-      <range mindmx="199" maxdmx="0" minval="0" maxval="100" />
-      <range mindmx="200" maxdmx="215" minval="0" maxval="0" />
-    </iris>
-    <focus dmxchannel="15" >
-      <range mindmx="255" maxdmx="0" minval="0" maxval="100" />
-    </focus>
-    <zoom dmxchannel="16" >
-      <range mindmx="255" maxdmx="0" minval="14" maxval="30" />
-    </zoom>
-    <prism dmxchannel="13" >
-      <prismrotation />
-      <step type="open" mindmx="0" maxdmx="19" caption="Excluded" />
-      <step type="open" mindmx="150" maxdmx="255" caption="Excluded" />
-      <step type="prism" mindmx="20" maxdmx="149" caption="Inserted" >
-        <step type="stop" handler="prismrotation" mindmx="80" maxdmx="89" minval="0" maxval="0" />
-        <range type="ccw" handler="prismrotation" mindmx="79" maxdmx="20" minval="0.1" maxval="3" />
-        <range type="cw" handler="prismrotation" mindmx="90" maxdmx="149" minval="0.1" maxval="3" />
-      </step>
-    </prism>
-    <position>
-      <pan dmxchannel="17" finedmxchannel="18" >
-	<range range="540" />
-      </pan>
-      <tilt dmxchannel="19" finedmxchannel="20" >
-	<range range="240" />
-      </tilt>
-    </position>
-    <ptspeed dmxchannel="21" >
-      <range type="linear" mindmx="245" maxdmx="2" minval="0" maxval="100" />
-    </ptspeed>
     <const dmxchannel="22" val="1" />
   </functions>
   <procedures>

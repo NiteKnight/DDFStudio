@@ -38,19 +38,21 @@
       <xs:attribute name="caption" type="xs:string" use="optional"/>
       <xs:attribute name="val" type="xs:string" use="optional"/>
       <xs:attribute name="for" type="xs:string" use="optional"/>
+      <xs:attribute name="handler" type="xs:string" use="optional"/>
     </xs:complexType>
   </xs:element>
 
   <xs:element name="range">
     <xs:complexType>
       <xs:attribute name="type" type="xs:string" use="optional"/>
-      <xs:attribute name="mindmx" type="xs:unsignedByte" use="required"/>
-      <xs:attribute name="maxdmx" type="xs:unsignedByte" use="required"/>
+      <xs:attribute name="mindmx" type="xs:unsignedByte" use="optional"/>
+      <xs:attribute name="maxdmx" type="xs:unsignedByte" use="optional"/>
       <xs:attribute name="minval" type="xs:decimal" use="optional"/>
       <xs:attribute name="maxval" type="xs:decimal" use="optional"/>
       <xs:attribute name="range" type="xs:decimal" use="optional"/>
       <xs:attribute name="caption" type="xs:string" use="optional"/>
       <xs:attribute name="handler" type="xs:string" use="optional"/>
+      <xs:attribute name="for" type="xs:string" use="optional"/>
     </xs:complexType>
   </xs:element>
 
@@ -309,14 +311,6 @@
               </xs:element>
               <!--end dimmer-->
 
-              <!--begin cmy-->
-              <xs:element ref="cmy" minOccurs="0" maxOccurs="1"/>
-              <!--end cmy-->
-
-              <!--begin rgb-->
-              <xs:element ref="rgb" minOccurs="0" maxOccurs="1"/>
-              <!--end rgb-->
-
               <!--begin zoom-->
               <xs:element name="zoom" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
@@ -386,6 +380,14 @@
                 </xs:complexType>
               </xs:element>
               <!--end ptspeed-->
+
+              <!--begin cmy-->
+              <xs:element ref="cmy" minOccurs="0" maxOccurs="1"/>
+              <!--end cmy-->
+
+              <!--begin rgb-->
+              <xs:element ref="rgb" minOccurs="0" maxOccurs="1"/>
+              <!--end rgb-->
 
               <!--begin colortemp-->
               <xs:element name="colortemp" minOccurs="0" maxOccurs="1">
