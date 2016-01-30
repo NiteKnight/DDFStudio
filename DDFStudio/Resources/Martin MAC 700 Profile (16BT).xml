@@ -148,11 +148,6 @@
     <const dmxchannel="22" val="1" />
   </functions>
   <procedures>
-    <reset>
-      <set dmxchannel="0" value="210" />
-      <hold value="6000" />
-      <restore dmxchannel="0" />
-    </reset>
     <lamp_on>
       <set dmxchannel="0" value="235" />
       <hold value="6000" />
@@ -163,6 +158,11 @@
       <hold value="6000" />
       <restore dmxchannel="0" />
     </lamp_off>
+    <reset>
+      <set dmxchannel="0" value="210" />
+      <hold value="6000" />
+      <restore dmxchannel="0" />
+    </reset>
     <procedure name="400W Mode">
       <set dmxchannel="0" value="240" />
       <hold value="1000" />

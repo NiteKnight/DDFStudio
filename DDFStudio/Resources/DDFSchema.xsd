@@ -257,6 +257,54 @@
                 </xs:complexType>
               </xs:element>
 
+              <xs:element name="effectwheel">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="effectrotation" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+                          <xs:element ref="range" minOccurs="0" maxOccurs="127"/>
+                        </xs:sequence>
+                        <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                        <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="effectindex" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element ref="range" minOccurs="0" maxOccurs="127"/>                                                    
+                        </xs:sequence>
+                        <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                        <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element ref="step" minOccurs="0" maxOccurs="256"/>                  
+                  </xs:sequence>
+                  <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                  <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+                </xs:complexType>
+              </xs:element>
+  
+  <xs:element name="set">
+    <xs:complexType>
+      <xs:attribute name="dmxchannel" type="DMXUniverse"/>
+      <xs:attribute name="value" type="xs:unsignedByte"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hold">
+    <xs:complexType>
+      <xs:attribute name="value" type="xs:positiveInteger"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="restore">
+    <xs:complexType>
+      <xs:attribute name="dmxchannel" type="DMXUniverse"/>
+    </xs:complexType>
+  </xs:element>
+
   <!--begin device-->
   <xs:element name ="device">
     <xs:complexType>
@@ -409,10 +457,361 @@
               <!--begin gobowheel-->
               <xs:element ref="gobowheel" minOccurs="0" maxOccurs="unbounded"/>
               <!--end gobowheel-->
-            </xs:sequence>
+            
+              <!--begin effectwheel-->
+              <xs:element ref="effectwheel" minOccurs="0" maxOccurs="unbounded"/>
+              <!--end effectwheel-->
+            
+              <!--begin rotation-->
+              <xs:element name="rotation" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+                    <xs:element ref="range" minOccurs="0" maxOccurs="127"/>
+                  </xs:sequence>
+                  <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                  <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end rotation-->
+
+              <!--begin index-->
+              <xs:element name="index" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="range" minOccurs="0" maxOccurs="127"/>
+                  </xs:sequence>
+                  <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                  <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end index-->
+
+              <!--begin raw-->
+              <xs:element name="raw" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+                    <xs:element ref="range" minOccurs="0" maxOccurs="127"/>
+                  </xs:sequence>
+                  <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                  <xs:attribute name="finedmxchannel" type="DMXUniverse" default="1"/>
+                  <xs:attribute name="name" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end raw-->
+
+              <!--begin rawstep-->
+              <xs:element name="rawstep" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+                  </xs:sequence>
+                  <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                  <xs:attribute name="name" type="xs:string" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end rawstep-->
+
+              <!--begin const-->
+              <xs:element name="const" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                  </xs:sequence>
+                  <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                  <xs:attribute name="name" type="xs:string" use="optional"/>
+                  <xs:attribute name="val" type="xs:unsignedByte" use="required"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end const-->
+
+              <!--begin fog-->
+              <xs:element name="fog" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="step" minOccurs="0" maxOccurs="256"/>
+                    <xs:element ref="range" minOccurs="0" maxOccurs="127"/>
+                  </xs:sequence>
+                  <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end fog-->
+
+              <!--begin switch-->
+              <xs:element name="switch" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                  </xs:sequence>
+                  <xs:attribute name="dmxchannel" type="DMXUniverse" default="1"/>
+                </xs:complexType>
+              </xs:element>
+              <!--end switch-->
+          </xs:sequence>
           </xs:complexType>
         </xs:element>
         <!--end functions-->
+      
+        <!--begin procedures-->
+        <xs:element name="procedures" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+
+              <xs:element name="lamp_on" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="lamp_off" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="reset" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="reset_pan_tilt" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              
+              <xs:element name="reset_pan" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="reset_tilt" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="reset_gobo" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="reset_gobo2" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="reset_color" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="reset_color2" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="reset_effects" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="reset_zoom" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="reset_shutter" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="reset_iris" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="reset_focus" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="reset_prism" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="pan_invert_off" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="pan_invert_on" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="tilt_invert_off" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="tilt_invert_on" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="pan_tilt_swap_off" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="pan_tilt_swap_on" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="display_off" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="display_on" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            
+              <xs:element name="procedure" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="set" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="hold" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="restore" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            
+            
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <!--end procedures-->
       </xs:sequence>
       <xs:attribute name="image" type="xs:string"/>
       <xs:attribute name="type" type="xs:string" default="DMXDevice"/>
