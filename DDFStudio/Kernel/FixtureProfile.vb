@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Collections.ObjectModel
+Imports System.IO
 
 Namespace Kernel
     Public Class InformationItem
@@ -70,6 +71,27 @@ Namespace Kernel
 
         Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
 
+        Private _Filename As String = Nothing
+        Public Property Filename() As String
+            Get
+                Return _Filename
+            End Get
+            Set(ByVal value As String)
+                _Filename = value
+                OnPropertyChanged("Filename")
+            End Set
+        End Property
+
+        Private _hasbeenChanged As Boolean = False
+        Public Property HasBeenChanged() As Boolean
+            Get
+                Return _hasbeenChanged
+            End Get
+            Set(ByVal value As Boolean)
+                _hasbeenChanged = value
+                OnPropertyChanged("HasBeenChanged")
+            End Set
+        End Property
 
         Private WithEvents _Information As InformationList
         Public Property Information() As InformationList
@@ -87,7 +109,8 @@ Namespace Kernel
         End Sub
 
         Private Sub Handler_InformationItemChanged() Handles _Information.ItemChanged
-            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs("InformationItem"))
+            HasBeenChanged = True
+            OnPropertyChanged("InformationItem")
         End Sub
 
         Public Sub New()

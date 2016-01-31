@@ -7,12 +7,15 @@
     xmlns:myXMLViewer="clr-namespace:DDFStudio.XMLViewer;assembly="
         xmlns:Kernel="clr-namespace:DDFStudio.Kernel" x:Name="obj_Window_MainWindow" x:Class="MainWindow"
         mc:Ignorable="d"
-        Title="DDF Studio" Height="600" Width="800" WindowStartupLocation="CenterScreen" Icon="Resources/MainIcon.ico" MinHeight="500" MinWidth="600">
+        Title="DDF Studio - (unnamed.xml)" Height="600" Width="800" WindowStartupLocation="CenterScreen" Icon="Resources/MainIcon.ico" MinHeight="500" MinWidth="600">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommandHandler"/>
         <CommandBinding Command="ApplicationCommands.Save" Executed="SaveCommandHandler" CanExecute="SaveCommandCanExecute"/>
         <CommandBinding Command="ApplicationCommands.SaveAs" Executed="SaveAsCommandHandler" CanExecute="SaveAsCommandCanExecute"/>
     </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Ctrl" Key="Q" Command="ApplicationCommands.Close"/>
+    </Window.InputBindings>
     <Grid x:Name="grdMainLayout" MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60*"/>

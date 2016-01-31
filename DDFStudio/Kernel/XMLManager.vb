@@ -1,5 +1,6 @@
 ﻿Imports System.Xml
 Imports System.Xml.Schema
+Imports System.IO
 
 
 Namespace Kernel
@@ -46,6 +47,15 @@ Namespace Kernel
         Public Sub refreshXML()
             XMLDocument = convertProfile2XML(_FixtureProfile)
         End Sub
+
+        Public Function saveXML(filename As String) As Boolean
+            Try
+                _XMLDoc.Save(filename)
+                Return True
+            Catch ex As Exception
+            End Try
+            Return False
+        End Function
 
         Private Function convertProfile2XML(profile As FixtureProfile) As XmlDocument
             Dim doc As XmlDocument = New XmlDocument()
