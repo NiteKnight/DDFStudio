@@ -310,7 +310,7 @@
     <xs:complexType>
       <xs:sequence>
         <!--begin information-->
-        <xs:element name="information" maxOccurs="1" minOccurs="1">
+        <xs:element name="information" maxOccurs="1" minOccurs="1" id="information">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="modell" type="xs:string"/>
@@ -815,6 +815,7 @@
       </xs:sequence>
       <xs:attribute name="image" type="xs:string"/>
       <xs:attribute name="type" type="xs:string" default="DMXDevice"/>
+      <xs:attribute name="dmxaddresscount" type="DMXUniverse"/>
       <xs:attribute name="dmxcversion" type="xs:unsignedInt" default="3"/>
       <xs:attribute name="ddfversion" type="xs:decimal" default="1.0"/>
     </xs:complexType>

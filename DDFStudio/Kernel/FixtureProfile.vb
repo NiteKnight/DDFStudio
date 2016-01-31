@@ -25,7 +25,7 @@ Namespace Kernel
             End Get
             Set(ByVal value As String)
                 _Value = value
-                OnPropertyChanged("")
+                OnPropertyChanged("Value")
             End Set
         End Property
 
@@ -42,11 +42,25 @@ Namespace Kernel
     Public Class InformationList
         Inherits ObservableCollection(Of InformationItem)
 
+        Public Event ItemChanged()
+
+        Private WithEvents ModelItem As New InformationItem("Model", "New Model")
+        Private WithEvents VendorItem As New InformationItem("Vendor", "New Vendor")
+        Private WithEvents AuthorItem As New InformationItem("Author", "New Author")
+        Private WithEvents CommentItem As New InformationItem("Comment", "New Comment")
+
         Public Sub New()
-            MyBase.Add(New InformationItem("Model", "New Model"))
-            MyBase.Add(New InformationItem("Vendor", "New Vendor"))
-            MyBase.Add(New InformationItem("Author", "New Author"))
-            MyBase.Add(New InformationItem("Comment", "New Comment"))
+            MyBase.Add(ModelItem)
+            MyBase.Add(VendorItem)
+            MyBase.Add(AuthorItem)
+            MyBase.Add(CommentItem)
+        End Sub
+
+        Private Sub Handler_ItemChanged() Handles ModelItem.PropertyChanged,
+                                                    VendorItem.PropertyChanged,
+                                                    AuthorItem.PropertyChanged,
+                                                    CommentItem.PropertyChanged
+            RaiseEvent ItemChanged()
         End Sub
 
     End Class
@@ -57,7 +71,7 @@ Namespace Kernel
         Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
 
 
-        Private _Information As InformationList
+        Private WithEvents _Information As InformationList
         Public Property Information() As InformationList
             Get
                 Return _Information
@@ -70,6 +84,10 @@ Namespace Kernel
 
         Protected Sub OnPropertyChanged(ByVal propertyName As String)
             RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+        End Sub
+
+        Private Sub Handler_InformationItemChanged() Handles _Information.ItemChanged
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs("InformationItem"))
         End Sub
 
         Public Sub New()

@@ -2,7 +2,7 @@
 'Imports DDFStudio
 
 Class MainWindow
-    Private _FixtureProfile As Kernel.FixtureProfile
+    Private WithEvents _FixtureProfile As Kernel.FixtureProfile
     Private WithEvents obj_XMLManager As XMLManager
     Private _IsShown4TheFirstTime As Boolean = False
 
@@ -64,8 +64,19 @@ Class MainWindow
         _MsgDlg.ShowDialog()
     End Sub
 
+#End Region
+
     Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         obj_XMLManager.loadXMLSchema()
+        obj_XMLManager.Profile = _FixtureProfile
+        obj_XMLManager.refreshXML()
+        obj_XMLViewer.xmlDocument = obj_XMLManager.XMLDocument
+    End Sub
+
+    Private Sub Handler_FixtureProfile() Handles _FixtureProfile.PropertyChanged
+        obj_XMLViewer.xmlDocument = Nothing
+        obj_XMLManager.refreshXML()
+        obj_XMLViewer.xmlDocument = obj_XMLManager.XMLDocument
     End Sub
 
     Private Sub MainWindow_StateChanged(sender As Object, e As EventArgs) Handles Me.StateChanged
@@ -75,7 +86,6 @@ Class MainWindow
     End Sub
 
 
-#End Region
 
 End Class
 
