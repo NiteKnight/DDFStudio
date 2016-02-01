@@ -52,7 +52,19 @@ Namespace Kernel
             Try
                 _XMLDoc.Save(filename)
                 Return True
+            Catch ex As XmlException
+                'Add exception handling here...
+                Dim _MsgDlg As MessageDialog = New MessageDialog("Error on saving",
+                                                 "An error occured while trying to generate XML code for the DDF. See a detailed error message below.",
+                                                 ex.Message, MessageDialog.MessageType.MsgError)
+                _MsgDlg.ShowDialog()
+                Return False
             Catch ex As Exception
+                Dim _MsgDlg As MessageDialog = New MessageDialog("Error on saving",
+                                                 "An error occured while trying to save the XML code for the DDF. See a detailed error message below.",
+                                                 ex.Message, MessageDialog.MessageType.MsgError)
+                _MsgDlg.ShowDialog()
+                Return False
             End Try
             Return False
         End Function

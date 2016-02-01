@@ -68,10 +68,11 @@ Public Class MessageDialog
         Select Case _MessageType
             Case MessageType.MsgWarning
                 obj_Image_IconImage.Source = Kernel.convertIcon2ImageSource(My.Resources.Icon_Warning)
+                My.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Exclamation)
             Case MessageType.MsgError
                 obj_Image_IconImage.Source = Kernel.convertIcon2ImageSource(My.Resources.Icon_Error)
+                My.Computer.Audio.PlaySystemSound(System.Media.SystemSounds.Asterisk)
             Case Else
-
         End Select
     End Sub
 

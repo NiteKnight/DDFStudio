@@ -12,6 +12,7 @@
         <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommandHandler"/>
         <CommandBinding Command="ApplicationCommands.Save" Executed="SaveCommandHandler" CanExecute="SaveCommandCanExecute"/>
         <CommandBinding Command="ApplicationCommands.SaveAs" Executed="SaveAsCommandHandler" CanExecute="SaveAsCommandCanExecute"/>
+        <CommandBinding Command="ApplicationCommands.New" Executed="NewCommandHandler" CanExecute="NewCommandCanExecute"/>
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="Q" Command="ApplicationCommands.Close"/>
@@ -36,6 +37,7 @@
         </StatusBar>
         <Menu x:Name="objMainMenu" Grid.ColumnSpan="2">
             <MenuItem x:Name="obj_MenuItem_File" Header="_File" InputGestureText="Alt + F">
+                <MenuItem Command="ApplicationCommands.New" Header="_New Profile"/>
                 <MenuItem x:Name="obj_MenuItem_File_LoadDDF" Header="_Load Profile"  InputGestureText="Ctrl + L" />
                 <MenuItem x:Name="obj_MenuItem_File_SaveDDF" Header="_Save Profile"  InputGestureText="Ctrl + S" Command="ApplicationCommands.Save"/>
                 <MenuItem x:Name="obj_MenuItem_File_SaveDDFAs" Header="Save _Profile as..." InputGestureText="Ctrl + P" Command="ApplicationCommands.SaveAs"/>
@@ -48,14 +50,10 @@
                 <MenuItem x:Name="obj_MenuItem_Tools_File" Header="_File Tools" IsCheckable="True" InputGestureText="Ctrl + F"/>
             </MenuItem>
         </Menu>
-        <TabControl x:Name="obj_TabControl_EditorTabs" Grid.Row="2" Grid.ColumnSpan="2" >
-            <TabItem Header="New Fixture Profile">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-        </TabControl>
+        <TabControl x:Name="obj_TabControl_EditorTabs" Grid.Row="2" Grid.ColumnSpan="2" />
         <ToolBarTray x:Name="obj_ToolBarTray_UpperTray" Grid.Row="1" Grid.ColumnSpan="2" >
             <ToolBar x:Name="obj_ToolBar_File">
-                <Button x:Name="obj_Button_New" Content="New" ToolTip="Create new fixture profile" />
+                <Button x:Name="obj_Button_New" Content="New" ToolTip="Create new fixture profile" Command="ApplicationCommands.New" />
                 <Button x:Name="obj_Button_Save" Content="Save" ToolTip="Save fixture profile" Command="ApplicationCommands.Save" />
                 <Button x:Name="obj_Button_SaveAs" Content="Save As..." ToolTip="Save fixture profile as..." Command="ApplicationCommands.SaveAs" />
             </ToolBar>
@@ -77,8 +75,8 @@
             </Canvas>
             <DataGrid x:Name="obj_DataGrid_FixtureHeader" Grid.Column="1" Margin="5,10,10,5" CanUserAddRows="False" CanUserResizeRows="False" CanUserReorderColumns="False" HeadersVisibility="None" ItemsSource="{Binding Information, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" AlternationCount="1" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Key, Mode=OneWay}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Binding="{Binding Value, BindsDirectlyToSource=True, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" ClipboardContentBinding="{x:Null}" IsReadOnly="False" MinWidth="150" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding Key}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Binding="{Binding Value, BindsDirectlyToSource=True}" ClipboardContentBinding="{x:Null}" IsReadOnly="False" MinWidth="150" Width="*"/>
                 </DataGrid.Columns>
                 <DataGrid.DataContext>
                     <Kernel:FixtureProfile/>

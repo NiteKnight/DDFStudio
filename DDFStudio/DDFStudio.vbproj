@@ -67,6 +67,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Kernel\DocumentManager.vb" />
     <Compile Include="Kernel\Utilities.vb" />
     <Compile Include="Kernel\XMLManager.vb" />
     <Compile Include="MessageDialog.xaml.vb">
