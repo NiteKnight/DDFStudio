@@ -1,15 +1,21 @@
 ﻿Imports System.Xml
 Imports System.ComponentModel
+Imports Microsoft.Win32
 
 Namespace Kernel
     Public Class DocumentManager
         Implements INotifyPropertyChanged
 
         Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
-        Public Event NewDocumentAdded(sender As Object)
+        Public Event NewDocumentAdded(sender As Object, guid As Guid)
+        Public Event DocumentSaved(sender As Object, guid As Guid)
+        Public Event DocumentChanged(sender As Object, guid As Guid)
+        Public Event InformationItemChanged(sender As Object, guid As Guid)
+        Public Event FilenameChanged(sender As Object, guid As Guid)
+        Public Event RequestDocumentSelection(sender As Object, guid As Guid)
 
         Private WithEvents obj_XMLManager As XMLManager
-
+        Private saveDialog As SaveFileDialog
 
         Private _ActiveXML As XmlDocument
         Public Property ActiveXML() As XmlDocument
@@ -51,24 +57,92 @@ Namespace Kernel
         Public Sub newDocument()
             Dim profile As New FixtureProfile()
             _Documents.Add(profile)
-            RaiseEvent NewDocumentAdded(Me)
+            selectDocument(profile.GUID)
+            RaiseEvent NewDocumentAdded(Me, profile.GUID)
         End Sub
 
-        Public Sub selectDocument(index As Integer)
-            ActiveProfile = _Documents(index)
-            obj_XMLManager.Profile = _ActiveProfile
+        Public Sub selectDocument(guid As Guid)
+            For Each doc As FixtureProfile In _Documents
+                If doc.GUID = guid Then
+                    ActiveProfile = doc
+                    obj_XMLManager.Profile = _ActiveProfile
+                    obj_XMLManager.refreshXML()
+                    ActiveXML = obj_XMLManager.XMLDocument
+                    Exit For
+                End If
+            Next
+        End Sub
+
+        Public Sub saveDocument()
+            If _ActiveProfile.Filename IsNot Nothing Then
+                performSave(_ActiveProfile)
+            Else
+                saveDocumentAs()
+            End If
+        End Sub
+
+        Public Sub saveDocument(doc As FixtureProfile)
+            If doc.Filename IsNot Nothing Then
+                performSave(doc)
+            Else
+                saveDocumentAs(doc)
+            End If
+        End Sub
+
+        Public Sub saveDocumentAs()
+            If showSaveAsDialog(_ActiveProfile) = True Then
+                _ActiveProfile.Filename = saveDialog.FileName
+                performSave(_ActiveProfile)
+            End If
+        End Sub
+
+        Public Sub saveDocumentAs(doc As FixtureProfile)
+            If showSaveAsDialog(doc) = True Then
+                doc.Filename = saveDialog.FileName
+                performSave(doc)
+            End If
+        End Sub
+
+        Private Function showSaveAsDialog(doc As FixtureProfile) As Boolean
+            'Show Save File Dialog here...
+            saveDialog = New SaveFileDialog()
+            saveDialog.Title = "Save DDF as"
+            saveDialog.FileName = doc.Information(1).Value & " " & doc.Information(0).Value
+            saveDialog.Filter = "XML file (*.xml)|*.xml"
+            Return saveDialog.ShowDialog
+        End Function
+
+        Private Function performSave(doc As FixtureProfile) As Boolean
+            obj_XMLManager.Profile = doc
             obj_XMLManager.refreshXML()
-            ActiveXML = obj_XMLManager.XMLDocument
-        End Sub
-
-        Public Function saveActiveDocument() As Boolean
-            If obj_XMLManager.saveXML(_ActiveProfile.Filename) = True Then
-                _ActiveProfile.HasBeenChanged = False
+            If obj_XMLManager.saveXML(doc.Filename) = True Then
+                doc.HasBeenChanged = False
+                RaiseEvent DocumentSaved(Me, doc.GUID)
                 Return True
             Else
                 Return False
             End If
         End Function
+
+        Public Function checkForUnsavedDocuments() As Boolean
+            For Each doc As FixtureProfile In _Documents
+                If doc.HasBeenChanged = True Then
+                    Return True
+                End If
+            Next
+            Return False
+        End Function
+
+        Public Sub saveAll()
+            For Each doc As FixtureProfile In _Documents
+                If doc.HasBeenChanged = True Then
+                    If doc.Filename = Nothing Then
+                        RaiseEvent RequestDocumentSelection(Me, doc.GUID)
+                    End If
+                    saveDocument(doc)
+                End If
+            Next
+        End Sub
 
         Protected Sub OnPropertyChanged(ByVal propertyName As String)
             RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
@@ -101,7 +175,13 @@ Namespace Kernel
         Private Sub ActiveProfile_PropertyChanged(sender As Object, e As ComponentModel.PropertyChangedEventArgs) Handles _ActiveProfile.PropertyChanged
             obj_XMLManager.refreshXML()
             ActiveXML = obj_XMLManager.XMLDocument
-            OnPropertyChanged("ActiveProfile")
+            If e.PropertyName = "InformationItem" Then
+                RaiseEvent InformationItemChanged(Me, _ActiveProfile.GUID)
+            End If
+            If e.PropertyName = "Filename" Then
+                RaiseEvent FilenameChanged(Me, _ActiveProfile.GUID)
+            End If
+            RaiseEvent DocumentChanged(Me, _ActiveProfile.GUID)
         End Sub
 
 

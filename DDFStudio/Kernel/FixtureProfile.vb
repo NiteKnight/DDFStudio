@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Collections.ObjectModel
-Imports System.IO
+Imports System.Guid
 
 Namespace Kernel
     Public Class InformationItem
@@ -71,6 +71,13 @@ Namespace Kernel
 
         Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
 
+        Private _GUID As Guid
+        Public ReadOnly Property GUID() As Guid
+            Get
+                Return _GUID
+            End Get
+        End Property
+
         Private _Filename As String = Nothing
         Public Property Filename() As String
             Get
@@ -115,6 +122,7 @@ Namespace Kernel
 
         Public Sub New()
             Information = New InformationList
+            _GUID = NewGuid()
         End Sub
 
     End Class

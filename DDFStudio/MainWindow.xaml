@@ -1,11 +1,13 @@
-﻿<Window
+﻿<Window 
+        x:Class="MainWindow"
+        x:Name="obj_Window_MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DDFStudio"
-    xmlns:myXMLViewer="clr-namespace:DDFStudio.XMLViewer;assembly="
-        xmlns:Kernel="clr-namespace:DDFStudio.Kernel" x:Name="obj_Window_MainWindow" x:Class="MainWindow"
+        xmlns:myXMLViewer="clr-namespace:DDFStudio.XMLViewer;assembly="
+        xmlns:Kernel="clr-namespace:DDFStudio.Kernel" 
         mc:Ignorable="d"
         Title="DDF Studio - (unnamed.xml)" Height="600" Width="800" WindowStartupLocation="CenterScreen" Icon="Resources/MainIcon.ico" MinHeight="500" MinWidth="600">
     <Window.CommandBindings>
@@ -13,6 +15,7 @@
         <CommandBinding Command="ApplicationCommands.Save" Executed="SaveCommandHandler" CanExecute="SaveCommandCanExecute"/>
         <CommandBinding Command="ApplicationCommands.SaveAs" Executed="SaveAsCommandHandler" CanExecute="SaveAsCommandCanExecute"/>
         <CommandBinding Command="ApplicationCommands.New" Executed="NewCommandHandler" CanExecute="NewCommandCanExecute"/>
+        <CommandBinding Command="local:Commands.SaveAllCommand" Executed="SaveAllCommandHandler" CanExecute="SaveAllCommandCanExecute"/>
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="Q" Command="ApplicationCommands.Close"/>
@@ -38,24 +41,28 @@
         <Menu x:Name="objMainMenu" Grid.ColumnSpan="2">
             <MenuItem x:Name="obj_MenuItem_File" Header="_File" InputGestureText="Alt + F">
                 <MenuItem Command="ApplicationCommands.New" Header="_New Profile"/>
-                <MenuItem x:Name="obj_MenuItem_File_LoadDDF" Header="_Load Profile"  InputGestureText="Ctrl + L" />
-                <MenuItem x:Name="obj_MenuItem_File_SaveDDF" Header="_Save Profile"  InputGestureText="Ctrl + S" Command="ApplicationCommands.Save"/>
-                <MenuItem x:Name="obj_MenuItem_File_SaveDDFAs" Header="Save _Profile as..." InputGestureText="Ctrl + P" Command="ApplicationCommands.SaveAs"/>
                 <Separator/>
-                <MenuItem x:Name="obj_MenuItem_File_RecentDDFs" Header="_Recent Profiles" InputGestureText="Ctrl + R"/>
+                <MenuItem x:Name="obj_MenuItem_File_LoadDDF" Header="_Load Profile"/>
+                <MenuItem x:Name="obj_MenuItem_File_SaveDDF" Header="_Save Profile" Command="ApplicationCommands.Save"/>
+                <MenuItem x:Name="obj_MenuItem_File_SaveDDFAs" Header="Save _Profile as..." Command="ApplicationCommands.SaveAs"/>
+                <MenuItem x:Name="obj_MenuItem_File_SaveAll" Header="Save all" Command="local:Commands.SaveAllCommand"/>
                 <Separator/>
-                <MenuItem x:Name="obj_MenuItem_File_Exit" Header="_Quit" InputGestureText="Ctrl + Q" Command="ApplicationCommands.Close"/>
+                <MenuItem x:Name="obj_MenuItem_File_RecentDDFs" Header="_Recent Profiles"/>
+                <Separator/>
+                <MenuItem x:Name="obj_MenuItem_File_Exit" Header="_Quit" Command="ApplicationCommands.Close"/>
             </MenuItem>
-            <MenuItem x:Name="obj_MenuItem_Tools" Header="_Tools" InputGestureText="Alt + T">
-                <MenuItem x:Name="obj_MenuItem_Tools_File" Header="_File Tools" IsCheckable="True" InputGestureText="Ctrl + F"/>
+            <MenuItem x:Name="obj_MenuItem_Tools" Header="_Tools">
+                <MenuItem x:Name="obj_MenuItem_Tools_File" Header="_File Tools" IsCheckable="True"/>
             </MenuItem>
         </Menu>
         <TabControl x:Name="obj_TabControl_EditorTabs" Grid.Row="2" Grid.ColumnSpan="2" />
         <ToolBarTray x:Name="obj_ToolBarTray_UpperTray" Grid.Row="1" Grid.ColumnSpan="2" >
             <ToolBar x:Name="obj_ToolBar_File">
                 <Button x:Name="obj_Button_New" Content="New" ToolTip="Create new fixture profile" Command="ApplicationCommands.New" />
+                <Separator/>
                 <Button x:Name="obj_Button_Save" Content="Save" ToolTip="Save fixture profile" Command="ApplicationCommands.Save" />
                 <Button x:Name="obj_Button_SaveAs" Content="Save As..." ToolTip="Save fixture profile as..." Command="ApplicationCommands.SaveAs" />
+                <Button Content="Save All" Command="local:Commands.SaveAllCommand"/>
             </ToolBar>
         </ToolBarTray>
         <Grid x:Name="obj_Grid_FixtureHeaderLayout" Grid.Row="3" Margin="0" Grid.ColumnSpan="1">

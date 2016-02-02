@@ -76,6 +76,7 @@
     <Compile Include="UserControls\Viewer.xaml.vb">
       <DependentUpon>Viewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\Commands.vb" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
