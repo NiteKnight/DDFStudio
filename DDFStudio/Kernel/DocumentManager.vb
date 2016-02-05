@@ -16,6 +16,7 @@ Namespace Kernel
 
         Private WithEvents obj_XMLManager As XMLManager
         Private saveDialog As SaveFileDialog
+        Private loadDialog As OpenFileDialog
 
         Private _ActiveXML As XmlDocument
         Public Property ActiveXML() As XmlDocument
@@ -72,6 +73,24 @@ Namespace Kernel
                 End If
             Next
         End Sub
+
+        Public Sub loadDocument()
+            If showOpenFileDialog() = True Then
+                Dim tempProf As FixtureProfile = obj_XMLManager.openXMLFile(loadDialog.FileName)
+                If tempProf IsNot Nothing Then
+                    _Documents.Add(tempProf)
+                    selectDocument(tempProf.GUID)
+                    RaiseEvent NewDocumentAdded(Me, tempProf.GUID)
+                End If
+            End If
+        End Sub
+
+        Private Function showOpenFileDialog() As Boolean
+            loadDialog = New OpenFileDialog
+            loadDialog.Title = "Load DDF"
+            loadDialog.Filter = "XML file (*.xml)|*.xml"
+            Return loadDialog.ShowDialog
+        End Function
 
         Public Sub saveDocument()
             If _ActiveProfile.Filename IsNot Nothing Then

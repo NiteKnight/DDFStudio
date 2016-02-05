@@ -36,16 +36,69 @@ Namespace Kernel
         End Property
 
 
+        Private obj_XMLParser As XMLParser
+
+
         Public Event XMLSchemaValidationWarning(ByVal sender As Object, ByVal message As String)
         Public Event XMLSchemaValidationError(ByVal sender As Object, ByVal message As String)
         Public Event XMLSchemaReadException(ByVal sender As Object, ByVal message As String)
 
         Public Sub New()
             _XMLDoc = New XmlDocument()
+            obj_XMLParser = New XMLParser
         End Sub
 
         Public Sub refreshXML()
             XMLDocument = convertProfile2XML(_FixtureProfile)
+        End Sub
+
+        Public Function openXMLFile(filename As String) As FixtureProfile
+            Dim doc As XmlDocument = loadXML(filename)
+            If doc Is Nothing Then
+                Return Nothing
+            Else
+                _XMLDoc = doc
+            End If
+            Return obj_XMLParser.parseXML(_XMLDoc)
+        End Function
+
+        Private Function loadXML(filename As String) As XmlDocument
+            Dim doc As New XmlDocument()
+            Dim reader As XmlReader
+            Dim settings As XmlReaderSettings = New XmlReaderSettings
+            settings.Schemas.Add(_XMLSchema)
+            AddHandler settings.ValidationEventHandler, AddressOf settings_ValidationEventHandler
+            settings.ValidationFlags = (settings.ValidationFlags Or XmlSchemaValidationFlags.ReportValidationWarnings)
+            settings.ValidationType = ValidationType.Schema
+            Try
+                reader = XmlReader.Create(filename, settings)
+            Catch ex As System.IO.FileNotFoundException
+                Dim _MsgDlg As MessageDialog = New MessageDialog("Error on loading XML data",
+                                                 "An error occured while trying to load the XML data. See a detailed error message below.",
+                                                 ex.Message, MessageDialog.MessageType.MsgError)
+                _MsgDlg.ShowDialog()
+                Return Nothing
+            End Try
+            'Return Nothing or XmlDocument...
+            doc.PreserveWhitespace = True
+            doc.Load(reader)
+            reader.Close()
+            Return doc
+        End Function
+
+        Private Sub settings_ValidationEventHandler(ByVal sender As Object, ByVal e As System.Xml.Schema.ValidationEventArgs)
+            If (e.Severity = XmlSeverityType.Warning) Then
+                Dim _MsgDlg As MessageDialog = New MessageDialog("Warning on XML validation",
+                                                 "An warning occured while trying to validate the XML code to be loaded. See a detailed error message below.",
+                                                 e.Message, MessageDialog.MessageType.MsgWarning)
+                _MsgDlg.ShowDialog()
+            ElseIf (e.Severity = XmlSeverityType.Error) Then
+                Dim _MsgDlg As MessageDialog = New MessageDialog("Error on XML validation",
+                                                 "An error occured while trying to validate the XML code to be loaded. See a detailed error message below.",
+                                                 e.Message, MessageDialog.MessageType.MsgError)
+                _MsgDlg.ShowDialog()
+                Dim objectType As Type = sender.GetType
+            End If
         End Sub
 
         Public Function saveXML(filename As String) As Boolean

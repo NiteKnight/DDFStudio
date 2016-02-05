@@ -15,6 +15,7 @@
         <CommandBinding Command="ApplicationCommands.Save" Executed="SaveCommandHandler" CanExecute="SaveCommandCanExecute"/>
         <CommandBinding Command="ApplicationCommands.SaveAs" Executed="SaveAsCommandHandler" CanExecute="SaveAsCommandCanExecute"/>
         <CommandBinding Command="ApplicationCommands.New" Executed="NewCommandHandler" CanExecute="NewCommandCanExecute"/>
+        <CommandBinding Command="ApplicationCommands.Open" Executed="OpenCommandHandler" CanExecute="OpenCommandCanExecute"/>
         <CommandBinding Command="local:Commands.SaveAllCommand" Executed="SaveAllCommandHandler" CanExecute="SaveAllCommandCanExecute"/>
     </Window.CommandBindings>
     <Window.InputBindings>
@@ -42,7 +43,7 @@
             <MenuItem x:Name="obj_MenuItem_File" Header="_File" InputGestureText="Alt + F">
                 <MenuItem Command="ApplicationCommands.New" Header="_New Profile"/>
                 <Separator/>
-                <MenuItem x:Name="obj_MenuItem_File_LoadDDF" Header="_Load Profile"/>
+                <MenuItem x:Name="obj_MenuItem_File_LoadDDF" Header="_Load Profile" Command="ApplicationCommands.Open"/>
                 <MenuItem x:Name="obj_MenuItem_File_SaveDDF" Header="_Save Profile" Command="ApplicationCommands.Save"/>
                 <MenuItem x:Name="obj_MenuItem_File_SaveDDFAs" Header="Save _Profile as..." Command="ApplicationCommands.SaveAs"/>
                 <MenuItem x:Name="obj_MenuItem_File_SaveAll" Header="Save all" Command="local:Commands.SaveAllCommand"/>
@@ -60,6 +61,7 @@
             <ToolBar x:Name="obj_ToolBar_File">
                 <Button x:Name="obj_Button_New" Content="New" ToolTip="Create new fixture profile" Command="ApplicationCommands.New" />
                 <Separator/>
+                <Button x:Name="obj_Button_Load" Content="Load" ToolTip="Load fixture profile" Command="ApplicationCommands.Open"/>
                 <Button x:Name="obj_Button_Save" Content="Save" ToolTip="Save fixture profile" Command="ApplicationCommands.Save" />
                 <Button x:Name="obj_Button_SaveAs" Content="Save As..." ToolTip="Save fixture profile as..." Command="ApplicationCommands.SaveAs" />
                 <Button Content="Save All" Command="local:Commands.SaveAllCommand"/>

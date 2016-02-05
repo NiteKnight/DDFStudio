@@ -31,6 +31,15 @@ Class MainWindow
         End If
     End Sub
 
+    Private Sub OpenCommandHandler(sender As Object, e As ExecutedRoutedEventArgs)
+        'Start loading action here...
+        obj_DocumentManager.loadDocument()
+    End Sub
+
+    Private Sub OpenCommandCanExecute(sender As Object, e As CanExecuteRoutedEventArgs)
+        e.CanExecute = True
+    End Sub
+
     Private Sub NewCommandHandler(sender As Object, e As ExecutedRoutedEventArgs)
         obj_DocumentManager.newDocument()
     End Sub

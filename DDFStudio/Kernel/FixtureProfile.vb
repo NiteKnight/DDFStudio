@@ -30,13 +30,24 @@ Namespace Kernel
             End Set
         End Property
 
+        Private _orderNumber As Byte
+        Public Property OrderNumber() As Byte
+            Get
+                Return _orderNumber
+            End Get
+            Set(ByVal value As Byte)
+                _orderNumber = value
+            End Set
+        End Property
+
         Protected Sub OnPropertyChanged(ByVal propertyName As String)
             RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
         End Sub
 
-        Public Sub New(ByVal key As String, ByVal value As String)
+        Public Sub New(ByVal key As String, ByVal value As String, number As Byte)
             Me.Key = key
             Me.Value = value
+            _orderNumber = number
         End Sub
     End Class
 
@@ -45,10 +56,10 @@ Namespace Kernel
 
         Public Event ItemChanged()
 
-        Private WithEvents ModelItem As New InformationItem("Model", "New Model")
-        Private WithEvents VendorItem As New InformationItem("Vendor", "New Vendor")
-        Private WithEvents AuthorItem As New InformationItem("Author", "New Author")
-        Private WithEvents CommentItem As New InformationItem("Comment", "New Comment")
+        Private WithEvents ModelItem As New InformationItem("Model", "New Model", 1)
+        Private WithEvents VendorItem As New InformationItem("Manufacturer", "New Manufacturer", 2)
+        Private WithEvents AuthorItem As New InformationItem("Author", "New Author", 3)
+        Private WithEvents CommentItem As New InformationItem("Comment", "New Comment", 4)
 
         Public Sub New()
             MyBase.Add(ModelItem)
