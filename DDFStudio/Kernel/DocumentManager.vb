@@ -13,21 +13,12 @@ Namespace Kernel
         Public Event InformationItemChanged(sender As Object, guid As Guid)
         Public Event FilenameChanged(sender As Object, guid As Guid)
         Public Event RequestDocumentSelection(sender As Object, guid As Guid)
+        Public Event FixtureDataChanged(sender As Object, guid As Guid)
 
         Private WithEvents obj_XMLManager As XMLManager
         Private saveDialog As SaveFileDialog
         Private loadDialog As OpenFileDialog
 
-        Private _ActiveXML As XmlDocument
-        Public Property ActiveXML() As XmlDocument
-            Get
-                Return _ActiveXML
-            End Get
-            Set(ByVal value As XmlDocument)
-                _ActiveXML = value
-                OnPropertyChanged("ActiveXML")
-            End Set
-        End Property
 
         Private WithEvents _ActiveProfile As FixtureProfile
         Public Property ActiveProfile() As FixtureProfile
@@ -57,8 +48,10 @@ Namespace Kernel
 
         Public Sub newDocument()
             Dim profile As New FixtureProfile()
+            obj_XMLManager.Profile = profile
+            obj_XMLManager.refreshXML()
+            profile.XMLDocument = obj_XMLManager.XMLDocument
             _Documents.Add(profile)
-            selectDocument(profile.GUID)
             RaiseEvent NewDocumentAdded(Me, profile.GUID)
         End Sub
 
@@ -67,8 +60,6 @@ Namespace Kernel
                 If doc.GUID = guid Then
                     ActiveProfile = doc
                     obj_XMLManager.Profile = _ActiveProfile
-                    obj_XMLManager.refreshXML()
-                    ActiveXML = obj_XMLManager.XMLDocument
                     Exit For
                 End If
             Next
@@ -79,7 +70,6 @@ Namespace Kernel
                 Dim tempProf As FixtureProfile = obj_XMLManager.openXMLFile(loadDialog.FileName)
                 If tempProf IsNot Nothing Then
                     _Documents.Add(tempProf)
-                    selectDocument(tempProf.GUID)
                     RaiseEvent NewDocumentAdded(Me, tempProf.GUID)
                 End If
             End If
@@ -191,11 +181,16 @@ Namespace Kernel
 
 #End Region
 
-        Private Sub ActiveProfile_PropertyChanged(sender As Object, e As ComponentModel.PropertyChangedEventArgs) Handles _ActiveProfile.PropertyChanged
+        Private Sub updateXML()
             obj_XMLManager.refreshXML()
-            ActiveXML = obj_XMLManager.XMLDocument
+            _ActiveProfile.XMLDocument = obj_XMLManager.XMLDocument
+        End Sub
+
+        Private Sub ActiveProfile_PropertyChanged(sender As Object, e As ComponentModel.PropertyChangedEventArgs) Handles _ActiveProfile.PropertyChanged
             If e.PropertyName = "InformationItem" Then
+                updateXML()
                 RaiseEvent InformationItemChanged(Me, _ActiveProfile.GUID)
+                RaiseEvent FixtureDataChanged(Me, _ActiveProfile.GUID)
             End If
             If e.PropertyName = "Filename" Then
                 RaiseEvent FilenameChanged(Me, _ActiveProfile.GUID)

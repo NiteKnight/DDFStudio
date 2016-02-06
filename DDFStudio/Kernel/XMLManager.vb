@@ -61,6 +61,7 @@ Namespace Kernel
                 _XMLDoc = doc
             End If
             Dim prof As FixtureProfile = obj_XMLParser.parseXML(_XMLDoc)
+            prof.XMLDocument = doc
             prof.Filename = filename
             Return prof
         End Function
@@ -83,7 +84,7 @@ Namespace Kernel
                 Return Nothing
             End Try
             'Return Nothing or XmlDocument...
-            doc.PreserveWhitespace = True
+            doc.PreserveWhitespace = False
             doc.Load(reader)
             reader.Close()
             Return doc

@@ -33,16 +33,16 @@ Namespace Kernel
                 infList.Clear()
                 Do While iter.MoveNext
                     If iter.Current.Name = "modell" Then
-                        infList.Add(New InformationItem("Model", iter.Current.Value, 1))
+                        infList.AddItem(New InformationItem("Model", iter.Current.Value, 1))
                     End If
                     If iter.Current.Name = "vendor" Then
-                        infList.Add(New InformationItem("Manufacturer", iter.Current.Value, 2))
+                        infList.AddItem(New InformationItem("Manufacturer", iter.Current.Value, 2))
                     End If
                     If iter.Current.Name = "author" Then
-                        infList.Add(New InformationItem("Author", iter.Current.Value, 3))
+                        infList.AddItem(New InformationItem("Author", iter.Current.Value, 3))
                     End If
                     If iter.Current.Name = "comment" Then
-                        infList.Add(New InformationItem("Comment", iter.Current.Value, 4))
+                        infList.AddItem(New InformationItem("Comment", iter.Current.Value, 4))
                     End If
                 Loop
                 Return infList

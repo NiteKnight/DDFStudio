@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Collections.ObjectModel
 Imports System.Guid
+Imports System.Xml
 
 Namespace Kernel
     Public Class InformationItem
@@ -56,22 +57,31 @@ Namespace Kernel
 
         Public Event ItemChanged()
 
-        Private WithEvents ModelItem As New InformationItem("Model", "New Model", 1)
-        Private WithEvents VendorItem As New InformationItem("Manufacturer", "New Manufacturer", 2)
-        Private WithEvents AuthorItem As New InformationItem("Author", "New Author", 3)
-        Private WithEvents CommentItem As New InformationItem("Comment", "New Comment", 4)
-
         Public Sub New()
-            MyBase.Add(ModelItem)
-            MyBase.Add(VendorItem)
-            MyBase.Add(AuthorItem)
-            MyBase.Add(CommentItem)
+            setupInitialData()
         End Sub
 
-        Private Sub Handler_ItemChanged() Handles ModelItem.PropertyChanged,
-                                                    VendorItem.PropertyChanged,
-                                                    AuthorItem.PropertyChanged,
-                                                    CommentItem.PropertyChanged
+        Public Sub AddItem(item As InformationItem)
+            AddHandler item.PropertyChanged, AddressOf Handler_ItemChanged
+            MyBase.Add(item)
+        End Sub
+
+        Private Sub setupInitialData()
+            Dim item As New InformationItem("Model", "New Model", 1)
+            AddHandler item.PropertyChanged, AddressOf Handler_ItemChanged
+            MyBase.Add(item)
+            item = New InformationItem("Manufacturer", "New Manufacturer", 2)
+            AddHandler item.PropertyChanged, AddressOf Handler_ItemChanged
+            MyBase.Add(item)
+            item = New InformationItem("Author", "New Author", 3)
+            AddHandler item.PropertyChanged, AddressOf Handler_ItemChanged
+            MyBase.Add(item)
+            item = New InformationItem("Comment", "New Comment", 4)
+            AddHandler item.PropertyChanged, AddressOf Handler_ItemChanged
+            MyBase.Add(item)
+        End Sub
+
+        Private Sub Handler_ItemChanged()
             RaiseEvent ItemChanged()
         End Sub
 
@@ -97,6 +107,17 @@ Namespace Kernel
             Set(ByVal value As String)
                 _Filename = value
                 OnPropertyChanged("Filename")
+            End Set
+        End Property
+
+        Private _XMLDocument As XmlDocument
+        Public Property XMLDocument() As XmlDocument
+            Get
+                Return _XMLDocument
+            End Get
+            Set(ByVal value As XmlDocument)
+                _XMLDocument = value
+                OnPropertyChanged("XMLDocument")
             End Set
         End Property
 

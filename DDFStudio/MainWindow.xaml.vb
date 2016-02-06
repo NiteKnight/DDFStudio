@@ -13,7 +13,6 @@ Class MainWindow
 
         ' Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
         obj_DocumentManager = New DocumentManager
-        'obj_ActiveProfile = obj_DocumentManager.ActiveProfile
 
     End Sub
 
@@ -81,14 +80,15 @@ Class MainWindow
         LeftColumn.MaxWidth = obj_Grid_DataLayout.ActualWidth - RightColumn.MinWidth - SpliterColumn.ActualWidth
     End Sub
 
-    Private Sub DocumentManager_PropertyChanged(sender As Object, e As ComponentModel.PropertyChangedEventArgs) Handles obj_DocumentManager.PropertyChanged
-        If e.PropertyName = "ActiveXML" Then
-            obj_XMLViewer.xmlDocument = obj_DocumentManager.ActiveXML
-        End If
+    Private Sub DocumentManager_FixtureDataChanged(sender As Object, guid As Guid) Handles obj_DocumentManager.FixtureDataChanged
+        obj_XMLViewer.xmlDocument = obj_ActiveProfile.XMLDocument
+    End Sub
 
+    Private Sub DocumentManager_PropertyChanged(sender As Object, e As ComponentModel.PropertyChangedEventArgs) Handles obj_DocumentManager.PropertyChanged
         If e.PropertyName = "ActiveProfile" Then
             obj_ActiveProfile = obj_DocumentManager.ActiveProfile
             obj_DataGrid_FixtureHeader.DataContext = obj_ActiveProfile
+            obj_XMLViewer.xmlDocument = obj_ActiveProfile.XMLDocument
             Me.Title = "DDFStudio - (" & Path.GetFileName(obj_ActiveProfile.Filename) & ")"
         End If
     End Sub
@@ -111,10 +111,12 @@ Class MainWindow
         For Each tab As TabItem In obj_TabControl_EditorTabs.Items
             If CType(tab.Tag, Guid) = guid Then
                 'Add Asterisk to Tabheader here...
-                If Not tab.Header.ToString.ElementAt(0) = "*" Then
-                    tab.Header = "*" & tab.Header.ToString
+                If tab.Header IsNot Nothing Then
+                    If Not tab.Header.ToString.ElementAt(0) = "*" Then
+                        tab.Header = "*" & tab.Header.ToString
+                    End If
+                    Exit For
                 End If
-                Exit For
             End If
         Next
     End Sub

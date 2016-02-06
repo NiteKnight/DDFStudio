@@ -85,7 +85,7 @@
             <DataGrid x:Name="obj_DataGrid_FixtureHeader" Grid.Column="1" Margin="5,10,10,5" CanUserAddRows="False" CanUserResizeRows="False" CanUserReorderColumns="False" HeadersVisibility="None" ItemsSource="{Binding Information, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" AlternationCount="1" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Key}" ClipboardContentBinding="{x:Null}" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding Value, BindsDirectlyToSource=True}" ClipboardContentBinding="{x:Null}" IsReadOnly="False" MinWidth="150" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding Value, BindsDirectlyToSource=True, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" ClipboardContentBinding="{x:Null}" IsReadOnly="False" MinWidth="150" Width="*"/>
                 </DataGrid.Columns>
                 <DataGrid.DataContext>
                     <Kernel:FixtureProfile/>
@@ -114,7 +114,8 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Label x:Name="obj_Label_XMLPreview" Content="XML Preview" FontWeight="Bold" />
-            <myXMLViewer:Viewer x:Name="obj_XMLViewer" Grid.Row="1" Width="Auto" Height="Auto" Margin="0,0,10,10"/>
+            <myXMLViewer:Viewer x:Name="obj_XMLViewer" Grid.Row="1" Width="Auto" Height="Auto" Margin="0,0,10,10">
+            </myXMLViewer:Viewer>
         </Grid>
     </Grid>
 </Window>
