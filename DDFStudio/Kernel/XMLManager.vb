@@ -14,6 +14,7 @@ Namespace Kernel
             "<?xml version=""1.0"" encoding=""utf-8""?>" & ControlChars.NewLine &
             "<device type=""DMXDevice"" dmxcversion=""3"" ddfversion=""1.0"" xmlns=""http://ddfstudio.lima-city.de"">" & ControlChars.NewLine &
             "<information></information>" & ControlChars.NewLine &
+            "<functions/>" & ControlChars.NewLine &
             "<procedures/>" & ControlChars.NewLine &
             "</device>"
 
@@ -59,7 +60,9 @@ Namespace Kernel
             Else
                 _XMLDoc = doc
             End If
-            Return obj_XMLParser.parseXML(_XMLDoc)
+            Dim prof As FixtureProfile = obj_XMLParser.parseXML(_XMLDoc)
+            prof.Filename = filename
+            Return prof
         End Function
 
         Private Function loadXML(filename As String) As XmlDocument
@@ -123,33 +126,28 @@ Namespace Kernel
         End Function
 
         Private Function convertProfile2XML(profile As FixtureProfile) As XmlDocument
-            Dim doc As XmlDocument = New XmlDocument()
+            Dim doc As New XmlDocument
+            Dim newNode As XmlNode
             Dim currentNode As XmlNode
-            Dim currentElement As XmlElement
-            Dim newElement As XmlElement
+            Dim nsURI As String = "http://ddfstudio.lima-city.de"
             Dim nsManager As XmlNamespaceManager = New XmlNamespaceManager(doc.NameTable)
-            Dim xPathString As String = ""
-            nsManager.AddNamespace("ddf", "http://ddfstudio.lima-city.de")
+            nsManager.AddNamespace("ddf", nsURI)
             doc.LoadXml(_XMLString)
 
-            'find "information" Tag and set it the current node...
-            xPathString = "//ddf:device/ddf:information"
-            currentNode = doc.DocumentElement.SelectSingleNode(xPathString, nsManager)
-            currentElement = CType(currentNode, XmlElement)
-
-            'create the subtags of the "information" node...
-            newElement = doc.CreateElement("modell", "http://ddfstudio.lima-city.de")
-            newElement.InnerText = profile.Information(0).Value
-            currentElement.AppendChild(newElement)
-            newElement = doc.CreateElement("vendor", "http://ddfstudio.lima-city.de")
-            newElement.InnerText = profile.Information(1).Value
-            currentElement.AppendChild(newElement)
-            newElement = doc.CreateElement("author", "http://ddfstudio.lima-city.de")
-            newElement.InnerText = profile.Information(2).Value
-            currentElement.AppendChild(newElement)
-            newElement = doc.CreateElement("comment", "http://ddfstudio.lima-city.de")
-            newElement.InnerText = profile.Information(3).Value
-            currentElement.AppendChild(newElement)
+            'find information tag and add childs with data...
+            currentNode = doc.SelectSingleNode("//ddf:information", nsManager)
+            newNode = doc.CreateElement("modell", nsURI)
+            newNode.InnerText = profile.Information(0).Value
+            currentNode.AppendChild(newNode)
+            newNode = doc.CreateElement("vendor", nsURI)
+            newNode.InnerText = profile.Information(1).Value
+            currentNode.AppendChild(newNode)
+            newNode = doc.CreateElement("author", nsURI)
+            newNode.InnerText = profile.Information(2).Value
+            currentNode.AppendChild(newNode)
+            newNode = doc.CreateElement("comment", nsURI)
+            newNode.InnerText = profile.Information(3).Value
+            currentNode.AppendChild(newNode)
             Return doc
         End Function
 

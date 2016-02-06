@@ -42,7 +42,7 @@ Namespace Kernel
                         infList.Add(New InformationItem("Author", iter.Current.Value, 3))
                     End If
                     If iter.Current.Name = "comment" Then
-                        infList.Add(New InformationItem("Model", iter.Current.Value, 4))
+                        infList.Add(New InformationItem("Comment", iter.Current.Value, 4))
                     End If
                 Loop
                 Return infList

@@ -89,11 +89,7 @@ Class MainWindow
         If e.PropertyName = "ActiveProfile" Then
             obj_ActiveProfile = obj_DocumentManager.ActiveProfile
             obj_DataGrid_FixtureHeader.DataContext = obj_ActiveProfile
-            If obj_ActiveProfile.Filename = Nothing Then
-                Me.Title = "DDFStudio - (unnamed.xml)"
-            Else
-                Me.Title = "DDFStudio - (" & Path.GetFileName(obj_ActiveProfile.Filename) & ")"
-            End If
+            Me.Title = "DDFStudio - (" & Path.GetFileName(obj_ActiveProfile.Filename) & ")"
         End If
     End Sub
 

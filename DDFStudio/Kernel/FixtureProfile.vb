@@ -89,7 +89,7 @@ Namespace Kernel
             End Get
         End Property
 
-        Private _Filename As String = Nothing
+        Private _Filename As String = "unnamed.xml"
         Public Property Filename() As String
             Get
                 Return _Filename

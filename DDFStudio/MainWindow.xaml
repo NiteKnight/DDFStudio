@@ -84,7 +84,7 @@
             </Canvas>
             <DataGrid x:Name="obj_DataGrid_FixtureHeader" Grid.Column="1" Margin="5,10,10,5" CanUserAddRows="False" CanUserResizeRows="False" CanUserReorderColumns="False" HeadersVisibility="None" ItemsSource="{Binding Information, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" AlternationCount="1" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Key}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Binding="{Binding Key}" ClipboardContentBinding="{x:Null}" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding Value, BindsDirectlyToSource=True}" ClipboardContentBinding="{x:Null}" IsReadOnly="False" MinWidth="150" Width="*"/>
                 </DataGrid.Columns>
                 <DataGrid.DataContext>
