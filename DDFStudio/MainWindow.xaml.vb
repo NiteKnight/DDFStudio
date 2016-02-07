@@ -24,6 +24,24 @@ Class MainWindow
         Me.Close()
     End Sub
 
+    Private Sub CloseProfileCommandHandler(sender As Object, e As ExecutedRoutedEventArgs)
+        If obj_DocumentManager.removeDocument(CType(obj_TabControl_EditorTabs.SelectedItem, TabItem).Tag) = True Then
+            obj_TabControl_EditorTabs.Items.Remove(obj_TabControl_EditorTabs.SelectedItem)
+            If obj_TabControl_EditorTabs.Items.Count = 0 Then
+                obj_XMLPreview.Text = String.Empty
+                obj_DataGrid_FixtureHeader.DataContext = Nothing
+            End If
+        End If
+    End Sub
+
+    Private Sub CloseProfileCommandCanExecute(sender As Object, e As CanExecuteRoutedEventArgs)
+        If obj_TabControl_EditorTabs.Items.Count > 0 Then
+            e.CanExecute = True
+        Else
+            e.CanExecute = False
+        End If
+    End Sub
+
     Private Sub SaveAllCommandHandler(sender As Object, e As ExecutedRoutedEventArgs)
         obj_DocumentManager.saveAll()
     End Sub
@@ -158,7 +176,9 @@ Class MainWindow
     End Sub
 
     Private Sub obj_TabControl_EditorTabs_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles obj_TabControl_EditorTabs.SelectionChanged
-        obj_DocumentManager.selectDocument(CType(obj_TabControl_EditorTabs.SelectedItem, TabItem).Tag)
+        If obj_TabControl_EditorTabs.SelectedItem IsNot Nothing Then
+            obj_DocumentManager.selectDocument(CType(obj_TabControl_EditorTabs.SelectedItem, TabItem).Tag)
+        End If
     End Sub
 End Class
 

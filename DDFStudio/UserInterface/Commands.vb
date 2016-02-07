@@ -9,5 +9,13 @@ Module Commands
             End Get
         End Property
 
-    End Module
+    Private _CloseProfileCommand As ICommand
+    Public ReadOnly Property CloseProfileCommand As ICommand
+        Get
+            If _CloseProfileCommand Is Nothing Then _CloseProfileCommand = New RoutedCommand()
+            Return _CloseProfileCommand
+        End Get
+    End Property
+
+End Module
 

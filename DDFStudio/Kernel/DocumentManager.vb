@@ -163,6 +163,26 @@ Namespace Kernel
             Next
         End Sub
 
+        Public Function removeDocument(guid As Guid) As Boolean
+            For Each doc As FixtureProfile In _Documents
+                If doc.GUID = guid Then
+                    Select Case MessageBox.Show("Changes to profile '" + doc.Information(1).Value & " - " & doc.Information(0).Value + "' are not saved. Save now?",
+                                       "Closing editor tab", MessageBoxButton.YesNoCancel, MessageBoxImage.Question)
+                        Case MessageBoxResult.Yes
+                            saveDocument()
+                            _Documents.Remove(doc)
+                            Return True
+                        Case MessageBoxResult.No
+                            _Documents.Remove(doc)
+                            Return True
+                        Case MessageBoxResult.Cancel
+                            Return False
+                    End Select
+                End If
+            Next
+            Return False
+        End Function
+
         Protected Sub OnPropertyChanged(ByVal propertyName As String)
             RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
         End Sub

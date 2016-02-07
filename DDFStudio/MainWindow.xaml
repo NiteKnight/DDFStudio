@@ -16,6 +16,7 @@
         <CommandBinding Command="ApplicationCommands.New" Executed="NewCommandHandler" CanExecute="NewCommandCanExecute"/>
         <CommandBinding Command="ApplicationCommands.Open" Executed="OpenCommandHandler" CanExecute="OpenCommandCanExecute"/>
         <CommandBinding Command="local:Commands.SaveAllCommand" Executed="SaveAllCommandHandler" CanExecute="SaveAllCommandCanExecute"/>
+        <CommandBinding Command="local:Commands.CloseProfileCommand" Executed="CloseProfileCommandHandler" CanExecute="CloseProfileCommandCanExecute"/>
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="Q" Command="ApplicationCommands.Close"/>
@@ -47,6 +48,8 @@
                 <MenuItem x:Name="obj_MenuItem_File_SaveDDFAs" Header="Save _Profile as..." Command="ApplicationCommands.SaveAs"/>
                 <MenuItem x:Name="obj_MenuItem_File_SaveAll" Header="Save all" Command="local:Commands.SaveAllCommand"/>
                 <Separator/>
+                <MenuItem x:Name="obj_MenuItem_File_Close" Header="Close" Command="local:Commands.CloseProfileCommand"/>
+                <Separator/>
                 <MenuItem x:Name="obj_MenuItem_File_RecentDDFs" Header="_Recent Profiles"/>
                 <Separator/>
                 <MenuItem x:Name="obj_MenuItem_File_Exit" Header="_Quit" Command="ApplicationCommands.Close"/>
@@ -63,7 +66,9 @@
                 <Button x:Name="obj_Button_Load" Content="Load" ToolTip="Load fixture profile" Command="ApplicationCommands.Open"/>
                 <Button x:Name="obj_Button_Save" Content="Save" ToolTip="Save fixture profile" Command="ApplicationCommands.Save" />
                 <Button x:Name="obj_Button_SaveAs" Content="Save As..." ToolTip="Save fixture profile as..." Command="ApplicationCommands.SaveAs" />
-                <Button Content="Save All" Command="local:Commands.SaveAllCommand"/>
+                <Button x:Name="obj_Button_SaveAll" Content="Save All" ToolTip="Save all modified profiles" Command="local:Commands.SaveAllCommand"/>
+                <Separator/>
+                <Button x:Name="obj_Button_Close" Content="Close" ToolTip="Close current profile" Command="local:Commands.CloseProfileCommand"/>
             </ToolBar>
         </ToolBarTray>
         <Grid x:Name="obj_Grid_FixtureHeaderLayout" Grid.Row="3" Margin="0" Grid.ColumnSpan="1">
