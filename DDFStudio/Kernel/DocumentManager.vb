@@ -165,7 +165,7 @@ Namespace Kernel
 
         Public Function removeDocument(guid As Guid) As Boolean
             For Each doc As FixtureProfile In _Documents
-                If doc.GUID = guid Then
+                If doc.GUID = guid And doc.HasBeenChanged = True Then
                     Select Case MessageBox.Show("Changes to profile '" + doc.Information(1).Value & " - " & doc.Information(0).Value + "' are not saved. Save now?",
                                        "Closing editor tab", MessageBoxButton.YesNoCancel, MessageBoxImage.Question)
                         Case MessageBoxResult.Yes
@@ -178,6 +178,8 @@ Namespace Kernel
                         Case MessageBoxResult.Cancel
                             Return False
                     End Select
+                Else
+                    Return True
                 End If
             Next
             Return False

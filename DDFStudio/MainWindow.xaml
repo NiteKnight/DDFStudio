@@ -58,7 +58,17 @@
                 <MenuItem x:Name="obj_MenuItem_Tools_File" Header="_File Tools" IsCheckable="True"/>
             </MenuItem>
         </Menu>
-        <TabControl x:Name="obj_TabControl_EditorTabs" Grid.Row="2" Grid.ColumnSpan="2" Margin="10,0" />
+        <TabControl x:Name="obj_TabControl_EditorTabs" Grid.Row="2" Grid.ColumnSpan="2" Margin="10,0" >
+            <TabControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Save" Command="ApplicationCommands.Save"/>
+                    <MenuItem Header="Save as..."  Command="ApplicationCommands.SaveAs"/>
+                    <MenuItem Header="Save all" Command="local:Commands.SaveAllCommand"/>
+                    <Separator/>
+                    <MenuItem Header="Close" Command="local:Commands.CloseProfileCommand"/>
+                </ContextMenu>
+            </TabControl.ContextMenu>
+        </TabControl>
         <ToolBarTray x:Name="obj_ToolBarTray_UpperTray" Grid.Row="1" Grid.ColumnSpan="2" >
             <ToolBar x:Name="obj_ToolBar_File">
                 <Button x:Name="obj_Button_New" Content="New" ToolTip="Create new fixture profile" Command="ApplicationCommands.New" />
