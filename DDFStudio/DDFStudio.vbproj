@@ -71,6 +71,7 @@
     <Compile Include="Kernel\Utilities.vb" />
     <Compile Include="Kernel\XMLManager.vb" />
     <Compile Include="Kernel\XMLParser.vb" />
+    <Compile Include="Kernel\XMLRenderer.vb" />
     <Compile Include="MessageDialog.xaml.vb">
       <DependentUpon>MessageDialog.xaml</DependentUpon>
     </Compile>

@@ -9,14 +9,7 @@ Namespace Kernel
         Private _XMLDoc As XmlDocument
         Private _XMLSchema As XmlSchema
         Private _FixtureProfile As FixtureProfile
-
-        Private Const _XMLString As String =
-            "<?xml version=""1.0"" encoding=""utf-8""?>" & ControlChars.NewLine &
-            "<device type=""DMXDevice"" dmxcversion=""3"" ddfversion=""1.0"" xmlns=""http://ddfstudio.lima-city.de"">" & ControlChars.NewLine &
-            "<information></information>" & ControlChars.NewLine &
-            "<functions/>" & ControlChars.NewLine &
-            "<procedures/>" & ControlChars.NewLine &
-            "</device>"
+        Private obj_XMLRenderer As XMLRenderer
 
         Public Property XMLDocument() As XmlDocument
             Get
@@ -33,6 +26,7 @@ Namespace Kernel
             End Get
             Set(ByVal value As FixtureProfile)
                 _FixtureProfile = value
+                _FixtureProfile.XmlRenderer = obj_XMLRenderer
             End Set
         End Property
 
@@ -47,10 +41,7 @@ Namespace Kernel
         Public Sub New()
             _XMLDoc = New XmlDocument()
             obj_XMLParser = New XMLParser
-        End Sub
-
-        Public Sub refreshXML()
-            XMLDocument = convertProfile2XML(_FixtureProfile)
+            obj_XMLRenderer = New XMLRenderer
         End Sub
 
         Public Function openXMLFile(filename As String) As FixtureProfile
@@ -124,32 +115,6 @@ Namespace Kernel
                 Return False
             End Try
             Return False
-        End Function
-
-        Private Function convertProfile2XML(profile As FixtureProfile) As XmlDocument
-            Dim doc As New XmlDocument
-            Dim newNode As XmlNode
-            Dim currentNode As XmlNode
-            Dim nsURI As String = "http://ddfstudio.lima-city.de"
-            Dim nsManager As XmlNamespaceManager = New XmlNamespaceManager(doc.NameTable)
-            nsManager.AddNamespace("ddf", nsURI)
-            doc.LoadXml(_XMLString)
-
-            'find information tag and add childs with data...
-            currentNode = doc.SelectSingleNode("//ddf:information", nsManager)
-            newNode = doc.CreateElement("modell", nsURI)
-            newNode.InnerText = profile.Information(0).Value
-            currentNode.AppendChild(newNode)
-            newNode = doc.CreateElement("vendor", nsURI)
-            newNode.InnerText = profile.Information(1).Value
-            currentNode.AppendChild(newNode)
-            newNode = doc.CreateElement("author", nsURI)
-            newNode.InnerText = profile.Information(2).Value
-            currentNode.AppendChild(newNode)
-            newNode = doc.CreateElement("comment", nsURI)
-            newNode.InnerText = profile.Information(3).Value
-            currentNode.AppendChild(newNode)
-            Return doc
         End Function
 
         Public Sub loadXMLSchema()

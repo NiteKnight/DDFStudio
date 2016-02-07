@@ -132,6 +132,18 @@ Namespace Kernel
             End Set
         End Property
 
+        Private _XMLRenderer As XMLRenderer
+        Public Property XmlRenderer() As XMLRenderer
+            Get
+                Return _XMLRenderer
+            End Get
+            Set(ByVal value As XMLRenderer)
+                _XMLRenderer = value
+                XMLDocument = _XMLRenderer.convertProfile2XML(Me)
+                OnPropertyChanged("XMLRenderer")
+            End Set
+        End Property
+
         Private WithEvents _Information As InformationList
         Public Property Information() As InformationList
             Get
@@ -149,6 +161,7 @@ Namespace Kernel
 
         Private Sub Handler_InformationItemChanged() Handles _Information.ItemChanged
             HasBeenChanged = True
+            XMLDocument = _XMLRenderer.convertProfile2XML(Me)
             OnPropertyChanged("InformationItem")
         End Sub
 

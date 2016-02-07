@@ -48,9 +48,6 @@ Namespace Kernel
 
         Public Sub newDocument()
             Dim profile As New FixtureProfile()
-            obj_XMLManager.Profile = profile
-            obj_XMLManager.refreshXML()
-            profile.XMLDocument = obj_XMLManager.XMLDocument
             _Documents.Add(profile)
             RaiseEvent NewDocumentAdded(Me, profile.GUID)
         End Sub
@@ -83,7 +80,7 @@ Namespace Kernel
         End Function
 
         Public Sub saveDocument()
-            If _ActiveProfile.Filename IsNot Nothing Then
+            If _ActiveProfile.Filename <> "unnamed.xml" Then
                 performSave(_ActiveProfile)
             Else
                 saveDocumentAs()
@@ -91,7 +88,7 @@ Namespace Kernel
         End Sub
 
         Public Sub saveDocument(doc As FixtureProfile)
-            If doc.Filename IsNot Nothing Then
+            If doc.Filename <> "unnamed.xml" Then
                 performSave(doc)
             Else
                 saveDocumentAs(doc)
@@ -123,7 +120,6 @@ Namespace Kernel
 
         Private Function performSave(doc As FixtureProfile) As Boolean
             obj_XMLManager.Profile = doc
-            obj_XMLManager.refreshXML()
             If obj_XMLManager.saveXML(doc.Filename) = True Then
                 doc.HasBeenChanged = False
                 RaiseEvent DocumentSaved(Me, doc.GUID)
@@ -181,19 +177,20 @@ Namespace Kernel
 
 #End Region
 
-        Private Sub updateXML()
-            obj_XMLManager.refreshXML()
-            _ActiveProfile.XMLDocument = obj_XMLManager.XMLDocument
-        End Sub
 
         Private Sub ActiveProfile_PropertyChanged(sender As Object, e As ComponentModel.PropertyChangedEventArgs) Handles _ActiveProfile.PropertyChanged
             If e.PropertyName = "InformationItem" Then
-                updateXML()
                 RaiseEvent InformationItemChanged(Me, _ActiveProfile.GUID)
                 RaiseEvent FixtureDataChanged(Me, _ActiveProfile.GUID)
             End If
             If e.PropertyName = "Filename" Then
                 RaiseEvent FilenameChanged(Me, _ActiveProfile.GUID)
+            End If
+            If e.PropertyName = "XMLRenderer" Then
+                RaiseEvent FixtureDataChanged(Me, _ActiveProfile.GUID)
+            End If
+            If e.PropertyName = "XMLDocument" Then
+                obj_XMLManager.XMLDocument = _ActiveProfile.XMLDocument
             End If
             RaiseEvent DocumentChanged(Me, _ActiveProfile.GUID)
         End Sub
