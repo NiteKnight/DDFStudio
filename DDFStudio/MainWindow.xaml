@@ -55,7 +55,7 @@
                 <MenuItem x:Name="obj_MenuItem_Tools_File" Header="_File Tools" IsCheckable="True"/>
             </MenuItem>
         </Menu>
-        <TabControl x:Name="obj_TabControl_EditorTabs" Grid.Row="2" Grid.ColumnSpan="2" />
+        <TabControl x:Name="obj_TabControl_EditorTabs" Grid.Row="2" Grid.ColumnSpan="2" Margin="10,0" />
         <ToolBarTray x:Name="obj_ToolBarTray_UpperTray" Grid.Row="1" Grid.ColumnSpan="2" >
             <ToolBar x:Name="obj_ToolBar_File">
                 <Button x:Name="obj_Button_New" Content="New" ToolTip="Create new fixture profile" Command="ApplicationCommands.New" />
@@ -113,7 +113,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Label x:Name="obj_Label_XMLPreview" Content="XML Preview" FontWeight="Bold" />
-            <WindowsFormsHost x:Name="obj_WinFormHost" Grid.Row="1" />
+            <WindowsFormsHost x:Name="obj_WinFormHost" Grid.Row="1" Margin="0,0,10,10" />
         </Grid>
     </Grid>
 </Window>

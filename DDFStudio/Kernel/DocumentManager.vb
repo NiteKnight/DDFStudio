@@ -62,8 +62,22 @@ Namespace Kernel
             Next
         End Sub
 
+        Private Function look4OpenDocument(filename As String) As Guid
+            For Each doc As FixtureProfile In _Documents
+                If doc.Filename = filename Then
+                    Return doc.GUID
+                End If
+            Next
+            Return Guid.Empty
+        End Function
+
         Public Sub loadDocument()
             If showOpenFileDialog() = True Then
+                Dim openDocGUID As Guid = look4OpenDocument(loadDialog.FileName)
+                If openDocGUID <> Guid.Empty Then
+                    RaiseEvent RequestDocumentSelection(Me, openDocGUID)
+                    Exit Sub
+                End If
                 Dim tempProf As FixtureProfile = obj_XMLManager.openXMLFile(loadDialog.FileName)
                 If tempProf IsNot Nothing Then
                     _Documents.Add(tempProf)
@@ -182,6 +196,7 @@ Namespace Kernel
             If e.PropertyName = "InformationItem" Then
                 RaiseEvent InformationItemChanged(Me, _ActiveProfile.GUID)
                 RaiseEvent FixtureDataChanged(Me, _ActiveProfile.GUID)
+                RaiseEvent DocumentChanged(Me, _ActiveProfile.GUID)
             End If
             If e.PropertyName = "Filename" Then
                 RaiseEvent FilenameChanged(Me, _ActiveProfile.GUID)
@@ -192,7 +207,6 @@ Namespace Kernel
             If e.PropertyName = "XMLDocument" Then
                 obj_XMLManager.XMLDocument = _ActiveProfile.XMLDocument
             End If
-            RaiseEvent DocumentChanged(Me, _ActiveProfile.GUID)
         End Sub
 
 
