@@ -185,5 +185,26 @@
   <ItemGroup>
     <None Include="Resources\Warning.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon_NewDocument.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon_OpenDocument.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon_Save.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon_SaveAs.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon_SaveAll.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon_Quit.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icon_CloseDocument.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

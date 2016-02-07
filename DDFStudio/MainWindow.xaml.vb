@@ -1,6 +1,7 @@
 ﻿Imports DDFStudio.Kernel
 Imports System.IO
 Imports FastColoredTextBoxNS
+Imports System.Drawing
 'Imports DDFStudio
 
 Class MainWindow
@@ -18,6 +19,11 @@ Class MainWindow
         obj_XMLPreview = New FastColoredTextBox()
         obj_XMLPreview.ReadOnly = True
         obj_XMLPreview.Language = FastColoredTextBoxNS.Language.XML
+        'obj_XMLPreview.BorderStyle = Forms.BorderStyle.FixedSingle
+        obj_XMLPreview.BorderStyle = Forms.BorderStyle.FixedSingle
+        obj_XMLPreview.IndentBackColor = Color.FromArgb(255, 215, 223, 253)
+        obj_XMLPreview.BackColor = Color.FromArgb(128, 255, 237, 168)
+        obj_XMLPreview.SelectionColor = Color.FromArgb(255, 55, 100, 255)
     End Sub
 
     Private Sub CloseCommandHandler(sender As Object, e As ExecutedRoutedEventArgs)
@@ -30,6 +36,7 @@ Class MainWindow
             If obj_TabControl_EditorTabs.Items.Count = 0 Then
                 obj_XMLPreview.Text = String.Empty
                 obj_DataGrid_FixtureHeader.DataContext = Nothing
+                obj_ActiveProfile = Nothing
             End If
         End If
     End Sub
@@ -81,6 +88,8 @@ Class MainWindow
             Else
                 e.CanExecute = False
             End If
+        Else
+            e.CanExecute = False
         End If
     End Sub
 

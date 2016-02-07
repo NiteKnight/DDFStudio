@@ -73,9 +73,79 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
         '''</summary>
+        Public ReadOnly Property Icon_CloseDocument() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Icon_CloseDocument", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
+        '''</summary>
         Public ReadOnly Property Icon_Error() As System.Drawing.Icon
             Get
                 Dim obj As Object = ResourceManager.GetObject("Icon_Error", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
+        '''</summary>
+        Public ReadOnly Property Icon_NewDocument() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Icon_NewDocument", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
+        '''</summary>
+        Public ReadOnly Property Icon_OpenDocument() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Icon_OpenDocument", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
+        '''</summary>
+        Public ReadOnly Property Icon_Quit() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Icon_Quit", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
+        '''</summary>
+        Public ReadOnly Property Icon_Save() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Icon_Save", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
+        '''</summary>
+        Public ReadOnly Property Icon_SaveAll() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Icon_SaveAll", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
+        '''</summary>
+        Public ReadOnly Property Icon_SaveAs() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Icon_SaveAs", resourceCulture)
                 Return CType(obj,System.Drawing.Icon)
             End Get
         End Property
