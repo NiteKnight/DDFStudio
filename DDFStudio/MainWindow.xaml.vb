@@ -1,10 +1,12 @@
 ﻿Imports DDFStudio.Kernel
 Imports System.IO
+Imports FastColoredTextBoxNS
 'Imports DDFStudio
 
 Class MainWindow
     Private WithEvents obj_ActiveProfile As FixtureProfile
     Private WithEvents obj_DocumentManager As DocumentManager
+    Private WithEvents obj_XMLPreview As FastColoredTextBox
 
     Public Sub New()
 
@@ -13,7 +15,9 @@ Class MainWindow
 
         ' Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
         obj_DocumentManager = New DocumentManager
-
+        obj_XMLPreview = New FastColoredTextBox()
+        obj_XMLPreview.ReadOnly = True
+        obj_XMLPreview.Language = FastColoredTextBoxNS.Language.XML
     End Sub
 
     Private Sub CloseCommandHandler(sender As Object, e As ExecutedRoutedEventArgs)
@@ -81,14 +85,13 @@ Class MainWindow
     End Sub
 
     Private Sub DocumentManager_FixtureDataChanged(sender As Object, guid As Guid) Handles obj_DocumentManager.FixtureDataChanged
-        obj_XMLViewer.xmlDocument = obj_ActiveProfile.XMLDocument
+        obj_XMLPreview.Text = Utilities.Beautify(obj_ActiveProfile.XMLDocument)
     End Sub
 
     Private Sub DocumentManager_PropertyChanged(sender As Object, e As ComponentModel.PropertyChangedEventArgs) Handles obj_DocumentManager.PropertyChanged
         If e.PropertyName = "ActiveProfile" Then
             obj_ActiveProfile = obj_DocumentManager.ActiveProfile
             obj_DataGrid_FixtureHeader.DataContext = obj_ActiveProfile
-            obj_XMLViewer.xmlDocument = obj_ActiveProfile.XMLDocument
             Me.Title = "DDFStudio - (" & Path.GetFileName(obj_ActiveProfile.Filename) & ")"
         End If
     End Sub
@@ -150,6 +153,7 @@ Class MainWindow
     End Sub
 
     Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        obj_WinFormHost.Child = obj_XMLPreview
         obj_DocumentManager.newDocument()
     End Sub
 

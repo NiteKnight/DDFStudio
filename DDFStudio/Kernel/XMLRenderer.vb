@@ -39,6 +39,14 @@ Namespace Kernel
             newNode = doc.CreateElement("comment", _nsURI)
             newNode.InnerText = profile.Information(3).Value
             currentNode.AppendChild(newNode)
+
+            Dim nav As XPath.XPathNavigator = doc.CreateNavigator
+            Dim iter As XPath.XPathNodeIterator = nav.Select("*")
+
+            Do While iter.MoveNext
+                iter.Current.OuterXml = iter.Current.OuterXml & ControlChars.NewLine
+            Loop
+
             Return doc
         End Function
 

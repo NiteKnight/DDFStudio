@@ -6,7 +6,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DDFStudio"
-        xmlns:myXMLViewer="clr-namespace:DDFStudio.XMLViewer;assembly="
         xmlns:Kernel="clr-namespace:DDFStudio.Kernel" 
         mc:Ignorable="d"
         Title="DDF Studio - (unnamed.xml)" Height="600" Width="800" WindowStartupLocation="CenterScreen" Icon="Resources/MainIcon.ico" MinHeight="500" MinWidth="600">
@@ -114,8 +113,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Label x:Name="obj_Label_XMLPreview" Content="XML Preview" FontWeight="Bold" />
-            <myXMLViewer:Viewer x:Name="obj_XMLViewer" Grid.Row="1" Width="Auto" Height="Auto" Margin="0,0,10,10">
-            </myXMLViewer:Viewer>
+            <WindowsFormsHost x:Name="obj_WinFormHost" Grid.Row="1" />
         </Grid>
     </Grid>
 </Window>
