@@ -6,7 +6,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DDFStudio"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:Kernel="clr-namespace:DDFStudio.Kernel" 
+        xmlns:Data="clr-namespace:DDFStudio.Kernel.Data" 
         mc:Ignorable="d"
         Title="DDF Studio - (unnamed.xml)" Height="600" Width="800" WindowStartupLocation="CenterScreen" Icon="Resources/MainIcon.ico" MinHeight="500" MinWidth="600">
     <Window.CommandBindings>
@@ -22,6 +24,142 @@
         <KeyBinding Modifiers="Ctrl" Key="Q" Command="ApplicationCommands.Close"/>
     </Window.InputBindings>
     <Window.Resources>
+
+        <local:ScrollbarOnFarRightConverter x:Key="scrollbarOnFarRightConverter"/>
+        <local:ScrollbarOnFarLeftConverter x:Key="scrollbarOnFarLeftConverter"/>
+
+        <!-- The colors that will be used when assembling the brushes for the LineButtons-->
+        <Color x:Key="LineButtonBackgroundColor_Bright">LightGoldenrodYellow</Color>
+        <Color x:Key="LineButtonBackgroundColor_Dark">#FAEEB1</Color>
+        <Color x:Key="LineButtonBackgroundColorDisabled_Bright">#EEE</Color>
+        <Color x:Key="LineButtonBackgroundColorDisabled_Dark">#999</Color>
+
+        <!-- Color of the border around the scrollbar-thumb -->
+        <SolidColorBrush x:Key="LineButtonBorderBrush" Color="#FF8693BD"/>
+
+        <!-- The color for the scrollbar's line-buttons when the mouse hovers over them -->
+        <LinearGradientBrush x:Key="LineButtonHoverBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="#FFFFD5A0" Offset="0.3"/>
+            <GradientStop Color="#FFFFA335" Offset="0.51"/>
+            <GradientStop Color="#FFFFC14A" Offset="0.986"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" x:Key="LineButtonBackgroundBrush">
+            <GradientStop Offset="0.3" Color="{StaticResource LineButtonBackgroundColor_Bright}"/>
+            <GradientStop Offset="0.4" Color="{StaticResource LineButtonBackgroundColor_Dark}"/>
+            <GradientStop Offset="1" Color="{StaticResource LineButtonBackgroundColor_Bright}"/>
+        </LinearGradientBrush>
+
+
+        <!-- The color for the scrollbar's line-buttons when they're clicked/pressed -->
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" x:Key="LineButtonPressedBrush">
+            <GradientStop Offset="0" Color="{StaticResource LineButtonBackgroundColor_Bright}"/>
+            <GradientStop Offset="0.6" Color="{StaticResource LineButtonBackgroundColor_Dark}"/>
+            <GradientStop Offset="0.7" Color="{StaticResource LineButtonBackgroundColor_Bright}"/>
+        </LinearGradientBrush>
+
+        <!-- The color to be used when drawing the arrows on the scrollbar's line-buttons -->
+        <SolidColorBrush x:Key="LineButtonBrush" Color="#FF14273D"/>
+
+        <!-- The color for the scrollbar's line-buttons when they're disabled -->
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" x:Key="LineButtonDisabledBrush">
+            <GradientStop Offset="0" Color="{StaticResource LineButtonBackgroundColorDisabled_Bright}"/>
+            <GradientStop Offset="1" Color="{StaticResource LineButtonBackgroundColorDisabled_Dark}"/>
+        </LinearGradientBrush>
+
+        <!--
+         The Geometries below will be used to render the ScrollViewer's LineLeft-,
+         LineRight- and TabMenu-buttons.
+      -->
+        <Geometry x:Key="ArrowLeft">M0,5 L10,10 10,0Z</Geometry>
+        <Geometry x:Key="ArrowRight">M0,0 L10,5 L0,10Z</Geometry>
+
+        <!-- 
+         Definitions for the Path-Geometries that are being used to render
+         the ScrollViewer's LineButtons.
+      -->
+        <Path x:Key="ArrowLeftPath"
+            Margin="4,3"
+            Data="{StaticResource ArrowLeft}"
+            Stroke="{StaticResource LineButtonBrush}" 
+            Fill="{StaticResource LineButtonBrush}"
+            Stretch="Fill"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"/>
+        <Path x:Key="ArrowRightPath"
+            Margin="4,3"
+            Data="{StaticResource ArrowRight}"
+            Stroke="{StaticResource LineButtonBrush}" 
+            Fill="{StaticResource LineButtonBrush}"
+            Stretch="Fill"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"/>
+
+        <!-- 
+         This determines how wide/high the LineButtons will be rendered.
+      -->
+        <sys:Double x:Key="ButtonWidthAndHeight">16</sys:Double>
+
+        <!-- Styles for the LineButtons -->
+        <Style x:Key="LineButtonStyle" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Height" Value="{StaticResource ButtonWidthAndHeight}"/>
+            <Setter Property="Width" Value="{StaticResource ButtonWidthAndHeight}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Border Name="ButtonBorder" Margin="1"
+                          BorderBrush="{StaticResource LineButtonBorderBrush}" 
+                          Background="{StaticResource LineButtonBackgroundBrush}" 
+                          CornerRadius="1" 
+                          BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="ButtonBorder" Property="Background" 
+                                Value="{StaticResource LineButtonHoverBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="ButtonBorder" Property="Background" 
+                                Value="{StaticResource LineButtonPressedBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonBorder" Property="Background" 
+                                Value="{StaticResource LineButtonDisabledBrush}" />
+                                <Setter TargetName="ButtonBorder" Property="Opacity" 
+                                Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <LinearGradientBrush x:Key="TabItem_BackgroundBrush_Unselected" EndPoint="1,0.25" StartPoint="0,0.5" SpreadMethod="Pad">
+            <GradientStop Color="#ff819af9" Offset="0"/>
+            <GradientStop Color="#ff0f3ff3" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="TabItem_HoverBackgroundBrush" EndPoint="0.5,1" StartPoint="0.5,0" SpreadMethod="Pad">
+            <GradientStop Color="#ffd7dffd" Offset="0"/>
+            <GradientStop Color="#ff6584f7" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="TabItem_BackgroundBrush_Selected" EndPoint="1,0.25" StartPoint="0,0.5" SpreadMethod="Pad">
+            <GradientStop Color="#ffffeda8" Offset="0"/>
+            <GradientStop Color="#ffffd531" Offset="1"/>
+        </LinearGradientBrush>
+
+        <SolidColorBrush x:Key="TabItem_BorderBrush_Selected" Color="#ffffd531"/>
+        <SolidColorBrush x:Key="TabItem_Border_Unselected" Color="#ff0f3ff3"/>
+        <SolidColorBrush x:Key="TabItem_TextBrush_Unselected" Color="#ffBBBBBB"/>
+        <SolidColorBrush x:Key="TabItem_TextBrush_Selected" Color="#ff000000"/>
+        <SolidColorBrush x:Key="TabItem_TextBrush_Hover" Color="#ff555555"/>
+        <SolidColorBrush x:Key="TabItem_HoverBorderBrush" Color="#ff6584f7"/>
+
+        <Thickness x:Key="TabPanelScrollPanel_Margin">5,0,0,2</Thickness>
+
         <Style x:Key="EnableDisableImageStyle" TargetType="{x:Type Image}">
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
@@ -33,6 +171,223 @@
                     </Setter>
                 </Trigger>
             </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type TabControl}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Border Height="35" Name="TabPanelBorder">
+                                <ScrollViewer SnapsToDevicePixels="True"
+                                                HorizontalScrollBarVisibility="Hidden"
+                                                VerticalScrollBarVisibility="Disabled"
+                                               Name="svTP" Grid.Row="0">
+
+                                    <ScrollViewer.Style>
+                                        <Style TargetType="{x:Type ScrollViewer}">
+                                            <Setter Property="Focusable" Value="False"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Grid SnapsToDevicePixels="True"
+                                                Grid.Row="0" Grid.Column="0">
+                                                            <Grid.ColumnDefinitions>
+                                                                <!--
+                              The TabItems (resp. the TabPanel)
+                              will appear here
+                           -->
+                                                                <ColumnDefinition Width="*"/>
+                                                                <!--
+                              The following two columns will host
+                              the Scrollbuttons
+                           -->
+                                                                <ColumnDefinition Width="Auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <ScrollContentPresenter
+                           x:Name="PART_ScrollContentPresenter"
+                           VirtualizingStackPanel.IsVirtualizing="False"
+                           SnapsToDevicePixels="True"
+                           Grid.Column="0"
+                           Content="{TemplateBinding ScrollViewer.Content}"/>
+                                                            <Grid x:Name="gScrollButtons"
+                              HorizontalAlignment="Right"
+                              Grid.Column="1">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="*"/>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                </Grid.RowDefinitions>
+                                                                <StackPanel Grid.Row="1"
+                                 Orientation="Horizontal"
+                                 Margin="{StaticResource TabPanelScrollPanel_Margin}">
+                                                                    <!--
+                                 The two RepeatButtons below will actually provide
+                                 the scroll-functionality for the TabItems.
+                                 Here, I'm utilizing the Page[Left/Right]Command;
+                                 This could as well be using the
+                                 Page[Left/Right]Command instead.
+                              -->
+                                                                    <RepeatButton
+                                 Style="{StaticResource LineButtonStyle}"
+                                 Command="ScrollBar.PageLeftCommand"
+                                 Content="{StaticResource ArrowLeftPath}"
+                                 IsEnabled="{Binding ElementName=svTP,
+                                    Path=HorizontalOffset,
+                                    Converter={StaticResource  scrollbarOnFarLeftConverter}}"/>
+                                                                    <RepeatButton
+                                 Style="{StaticResource LineButtonStyle}"
+                                 Command="ScrollBar.PageRightCommand"
+                                 Content="{StaticResource ArrowRightPath}">
+                                                                        <RepeatButton.IsEnabled>
+                                                                            <MultiBinding Converter="{StaticResource scrollbarOnFarRightConverter}">
+                                                                                <Binding ElementName="svTP"
+                                          Path="HorizontalOffset"/>
+                                                                                <Binding ElementName="svTP"
+                                          Path="ViewportWidth"/>
+                                                                                <Binding ElementName="svTP"
+                                          Path="ExtentWidth"/>
+                                                                            </MultiBinding>
+                                                                        </RepeatButton.IsEnabled>
+                                                                    </RepeatButton>
+                                                                </StackPanel>
+                                                            </Grid>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <DataTrigger Value="false">
+                                                                <DataTrigger.Binding>
+                                                                    <MultiBinding Converter="{StaticResource scrollbarOnFarRightConverter}">
+                                                                        <Binding ElementName="svTP"
+                                    Path="HorizontalOffset"/>
+                                                                        <Binding ElementName="svTP"
+                                    Path="ViewportWidth"/>
+                                                                        <Binding ElementName="svTP"
+                                    Path="ExtentWidth"/>
+                                                                    </MultiBinding>
+                                                                </DataTrigger.Binding>
+                                                            </DataTrigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ScrollViewer.Style>
+
+                                    <!-- This is the area in which TabItems (the strips) will be drawn. -->
+                                    <StackPanel IsItemsHost="True"
+                                                Name="TabPanel"
+                                                Orientation="Horizontal"
+                                                KeyboardNavigation.TabIndex="1"/>
+
+                                </ScrollViewer>
+
+                            </Border>
+
+                            <Border BorderThickness="1,0,1,1"
+                     Grid.Row="1">
+                                <!--
+                     This is where the Content of the selected TabPage
+                     will be rendered.
+                -->
+                                <ContentPresenter ContentSource="SelectedContent" Margin="0"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid Height="35" VerticalAlignment="Bottom">
+                            <Border Name="Border"
+                                    BorderThickness="1,1,1,0"
+                                    CornerRadius="12,3,0,0"
+                                    Background="{StaticResource TabItem_BackgroundBrush_Unselected}" 
+                                    BorderBrush="{StaticResource TabItem_BorderBrush_Selected}" RenderTransformOrigin="0.5,0.5">
+                                <ContentPresenter x:Name="ContentSite"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"
+                                                  ContentSource="Header"
+                                                  Margin="7,2,12,2"
+                                                  RecognizesAccessKey="True"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <!-- The appearance of a TabItem when it's inactive/unselected -->
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter Property="Panel.ZIndex" Value="90" />
+                                <Setter TargetName="Border" Property="BorderBrush"
+                                Value="{StaticResource TabItem_Border_Unselected}" />
+                                <Setter Property="Foreground"
+                                Value="{StaticResource TabItem_TextBrush_Unselected}" />
+                                <!-- Except for the selected TabItem, tabs are to appear smaller in height. -->
+                                <Setter TargetName="Border" Property="Margin"
+                                Value="0,5,-10,0"/>
+                            </Trigger>
+
+                            <!--
+                        The appearance of a TabItem when it's disabled
+                        (in addition to Selected=False)
+                     -->
+                            <!--<Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Panel.ZIndex" Value="80" />
+                                <Setter TargetName="Border" Property="BorderBrush"
+                                Value="{StaticResource TabItem_DisabledBorderBrush}" />
+                                <Setter TargetName="Border" Property="Background"
+                                Value="{StaticResource TabItem_BackgroundBrush_Disabled}" />
+                                <Setter Property="Foreground"
+                                Value="{StaticResource TabItem_TextBrush_Disabled}" />
+                            </Trigger>-->
+
+                            <!-- The appearance of a TabItem when the mouse hovers over it -->
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Border.IsMouseOver" Value="True"/>
+                                    <Condition Property="IsSelected" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Panel.ZIndex" Value="100" />
+                                <Setter Property="Foreground" Value="{StaticResource TabItem_TextBrush_Hover}" />
+                                <Setter Property="BorderBrush"
+                                TargetName="Border"
+                                Value="{StaticResource TabItem_HoverBorderBrush}" />
+                                <Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,1" />
+                                <Setter Property="Background" TargetName="Border"
+                                Value="{StaticResource TabItem_HoverBackgroundBrush}"/>
+                                <!--
+                           To further increase the hover-effect, extend the TabItem's height a little
+                           more compared to unselected TabItems.
+                        -->
+                                <Setter TargetName="Border" Property="Margin"
+                                Value="0,2,0,0"/>
+                            </MultiTrigger>
+
+                            <!-- The appearance of a TabItem when it's active/selected -->
+                            <Trigger Property="IsSelected" Value="True">
+                                <!-- We want the selected TabItem to always be on top. -->
+                                <Setter Property="Panel.ZIndex" Value="100" />
+                                <Setter TargetName="Border" Property="BorderBrush"
+                                Value="{StaticResource TabItem_BorderBrush_Selected}" />
+                                <Setter TargetName="Border" Property="Background"
+                                Value="{StaticResource TabItem_BackgroundBrush_Selected}" />
+                                <Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0" />
+                                <Setter Property="Foreground"
+                                Value="{StaticResource TabItem_TextBrush_Selected}"/>
+                                <Setter TargetName="Border" Property="Margin"
+                                Value="0,0,0,0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
         </Style>
     </Window.Resources>
     <Grid x:Name="grdMainLayout" MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}}">
@@ -202,7 +557,7 @@
                     <DataGridTextColumn Binding="{Binding Value, BindsDirectlyToSource=True, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" ClipboardContentBinding="{x:Null}" IsReadOnly="False" MinWidth="150" Width="*"/>
                 </DataGrid.Columns>
                 <DataGrid.DataContext>
-                    <Kernel:FixtureProfile/>
+                    <Data:FixtureProfile/>
                 </DataGrid.DataContext>
             </DataGrid>
         </Grid>

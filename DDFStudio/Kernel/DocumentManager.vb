@@ -1,6 +1,7 @@
 ﻿Imports System.Xml
 Imports System.ComponentModel
 Imports Microsoft.Win32
+Imports DDFStudio.Kernel.Data
 
 Namespace Kernel
     Public Class DocumentManager

@@ -2,7 +2,7 @@
 Imports System.IO
 Imports FastColoredTextBoxNS
 Imports System.Drawing
-'Imports DDFStudio
+Imports DDFStudio.Kernel.Data
 
 Class MainWindow
     Private WithEvents obj_ActiveProfile As FixtureProfile

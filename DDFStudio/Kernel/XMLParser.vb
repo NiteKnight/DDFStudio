@@ -1,5 +1,6 @@
 ﻿Imports System.Xml
 Imports System.Xml.XPath
+Imports DDFStudio.Kernel.Data
 
 Namespace Kernel
 

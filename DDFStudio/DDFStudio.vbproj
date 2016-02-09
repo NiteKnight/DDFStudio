@@ -74,6 +74,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Kernel\Data\InformationItem.vb" />
+    <Compile Include="Kernel\Data\InformationList.vb" />
     <Compile Include="Kernel\DocumentManager.vb" />
     <Compile Include="Kernel\Utilities.vb" />
     <Compile Include="Kernel\XMLManager.vb" />
@@ -82,6 +84,7 @@
     <Compile Include="MessageDialog.xaml.vb">
       <DependentUpon>MessageDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScrollBarConverters.vb" />
     <Compile Include="UserControls\Viewer.xaml.vb">
       <DependentUpon>Viewer.xaml</DependentUpon>
     </Compile>
@@ -94,7 +97,7 @@
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Kernel\FixtureProfile.vb" />
+    <Compile Include="Kernel\Data\FixtureProfile.vb" />
     <Compile Include="MainWindow.xaml.vb">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

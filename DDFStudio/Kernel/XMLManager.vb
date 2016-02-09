@@ -1,6 +1,7 @@
 ﻿Imports System.Xml
 Imports System.Xml.Schema
 Imports System.IO
+Imports DDFStudio.Kernel.Data
 
 
 Namespace Kernel
